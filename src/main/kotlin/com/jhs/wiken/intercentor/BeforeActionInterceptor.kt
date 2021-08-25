@@ -19,8 +19,6 @@ class BeforeActionInterceptor(
         // rq 객체를 세팅
         rq.init()
 
-        println("HIHI")
-
         return super.preHandle(req, resp, handler)
     }
 }

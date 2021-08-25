@@ -25,7 +25,7 @@ spring:
 mybatis:
   type-aliases-package: com.jhs.wiken.vo
 custom:
-  siteName : 위켄
+  siteName : 위캔
   siteMainUri: http://localhost:8077
   notifyEmailFrom: no-reply@no-reply.com
   logging:
