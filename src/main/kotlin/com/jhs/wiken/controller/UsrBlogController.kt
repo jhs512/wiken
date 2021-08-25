@@ -21,12 +21,11 @@ class UsrBlogController(
         rq.currentPageSiteHeaderType = "blog"
 
         val blogKen = kenService.getKen(blogId) ?: return rq.historyBackJsOnTemplate("존재하지 않는 blog 입니다.")
-        val blogKenSourceInterpreter = blogKen.genSourceInterpreter()
+        val blogKenSourceInterpreter = blogKen.sourceInterpreter
         val blogCss = blogKenSourceInterpreter.getCssSource(0)
-        val blogKenConfig = blogKen.getKenConfig()
 
-        val blogName = blogKenConfig.title
-        val articleIds = blogKenConfig.articles
+        val blogName = blogKen.title
+        val articleIds = blogKen.kenConfig.articles
 
         val articles = blogService.getArticlesByKenIds(articleIds)
 
@@ -48,11 +47,11 @@ class UsrBlogController(
         rq.currentPageSiteHeaderType = "blog"
 
         val blogKen = kenService.getKen(blogId) ?: return rq.historyBackJsOnTemplate("존재하지 않는 blog 입니다.")
-        val blogKenSourceInterpreter = blogKen.genSourceInterpreter()
+        val blogKenSourceInterpreter = blogKen.sourceInterpreter
         val blogCss = blogKenSourceInterpreter.getCssSource(0)
-        val blogKenConfig = blogKen.getKenConfig()
+        val blogKenConfig = blogKen.kenConfig
 
-        val blogName = blogKenConfig.title
+        val blogName = blogKen.title
         val articleIds = blogKenConfig.articles
 
         val articles = blogService.getArticlesByKenIds(articleIds)

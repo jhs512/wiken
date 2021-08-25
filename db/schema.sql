@@ -171,7 +171,7 @@ CREATE TABLE hashTag (
 # 인덱스 걸기
 ALTER TABLE `hashTag` ADD INDEX (`relTypeCode`, `relId`);
 
-# 켄 그룹아이템 추가
+# 캔 그룹아이템 추가
 CREATE TABLE kenGroupItem (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
@@ -183,7 +183,7 @@ CREATE TABLE kenGroupItem (
 
 ALTER TABLE `kenGroupItem` ADD INDEX (`groupCode`, `relId`);
 
-# 켄의 memberId에 인덱스 추가
+# 캔의 memberId에 인덱스 추가
 ALTER TABLE `ken` ADD INDEX (`memberId`);
 
 # 회원의 테이블에 loginId 유니크 인덱스 추가

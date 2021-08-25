@@ -40,7 +40,7 @@ class UsrKenController(
     @RequestMapping("/ken/doWrite")
     @ResponseBody
     fun doWrite(source: String, result: String): String {
-        // 켄 소스 해석기 생성
+        // 캔 소스 해석기 생성
         val kenSourceInterpreter = KenSourceInterpreter.from(source)
         // 해석기에서 제목 가져옴
         val title = kenSourceInterpreter.title
@@ -66,13 +66,13 @@ class UsrKenController(
         // 입력받은 소스를 새 소스로 설정한다.
         var newSource = source
 
-        // 켄 소스 해석기 생성
+        // 캔 소스 해석기 생성
         var kenSourceInterpreter = KenSourceInterpreter.from(source)
 
         // 만약 사용자가 깜빡하고 config을 만들지 않았다면, 기존 config을 재사용한다.
         if (!kenSourceInterpreter.hasConfig) {
             newSource = "$" + "$" + "config\n"
-            newSource += ken.genKenConfigSource()
+            newSource += kenSourceInterpreter.kenConfigSource
             newSource += "\n" + "$" + "$" + "\n"
             newSource += source.trim()
 
@@ -92,7 +92,7 @@ class UsrKenController(
     @RequestMapping("/ken/doDelete")
     @ResponseBody
     fun doDelete(id: Int): String {
-        val ken = kenService.getKen(id) ?: return rq.historyBackJs("존재하지 않는 ken 입니다.")
+        val ken = kenService.getKen(id) ?: return rq.historyBackJs("존재하지 않는 캔 입니다.")
 
         val actorCanDeleteRd = memberService.actorCanDelete(rq.loginedMember, ken)
 
@@ -108,7 +108,7 @@ class UsrKenController(
     // 완벽
     @RequestMapping("/ken/{id}/edit")
     fun showModify(@PathVariable("id") id: Int, model: Model): String {
-        val ken = kenService.getKen(id) ?: return rq.historyBackJsOnTemplate("존재하지 않는 ken 입니다.")
+        val ken = kenService.getKen(id) ?: return rq.historyBackJsOnTemplate("존재하지 않는 캔 입니다.")
 
         if (ken.memberId != rq.loginedMemberId) {
             return rq.historyBackJsOnTemplate("수정권한이 없습니다.")
@@ -129,7 +129,7 @@ class UsrKenController(
     fun showDetail(@PathVariable("id") id: Int, model: Model): String {
         rq.currentPageUseToastUiEditor = true
         rq.currentPageCanGoEditCurrentKen = true
-        val ken = kenService.getKen(id) ?: return rq.historyBackJsOnTemplate("존재하지 않는 ken 입니다.")
+        val ken = kenService.getKen(id) ?: return rq.historyBackJsOnTemplate("존재하지 않는 캔 입니다.")
         model["ken"] = ken
         return "usr/ken/detail"
     }

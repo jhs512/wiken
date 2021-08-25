@@ -12,7 +12,7 @@ class KenService(private val kenRepository: KenRepository) {
         kenRepository.write(memberId, title, source, result)
         val id = kenRepository.getLastInsertId()
 
-        return ResultData.from("S-1", "${id}번 켄이 생성되었습니다.", "id", id)
+        return ResultData.from("S-1", "${id}번 캔이 생성되었습니다.", "id", id)
     }
 
     // 완벽
@@ -24,7 +24,7 @@ class KenService(private val kenRepository: KenRepository) {
     fun modify(id: Int, title: String, source: String, result: String): ResultData<Int> {
         kenRepository.modify(id, title, source, result)
 
-        return ResultData.from("S-1", "${id}번 켄이 생성되었습니다.", "id", id)
+        return ResultData.from("S-1", "${id}번 캔이 생성되었습니다.", "id", id)
     }
 
     // 완벽

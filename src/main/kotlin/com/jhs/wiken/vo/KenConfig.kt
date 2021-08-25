@@ -6,7 +6,7 @@ import com.jhs.wiken.util.Ut
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class KenConfig(
     val isExists: Boolean = true,
-    val title: String,
+    val title: String = "",
     val keywords: List<String> = arrayListOf(),
     val typeCode: String = "doc", // doc, blog, series
     val articles: List<Int> = arrayListOf(),
@@ -27,7 +27,7 @@ data class KenConfig(
         }
 
         fun fromEmpty(): KenConfig {
-            return KenConfig(false, "", arrayListOf())
+            return KenConfig(false)
         }
     }
 }

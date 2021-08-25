@@ -36,9 +36,10 @@ class KenSourceInterpreter(
             return title
         }
 
-    fun getKenConfigSource(): String {
-        return kenConfig.source
-    }
+    val kenConfigSource: String
+        get() {
+            return kenConfig.source
+        }
 
     fun getCssSource(i: Int): String {
         val has = source.contains("```css")

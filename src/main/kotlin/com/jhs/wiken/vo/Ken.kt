@@ -9,17 +9,23 @@ data class Ken(
     val source: String,
     val result: String,
 ) {
-    fun genKenConfigSource(): String {
-        val kenSourceInterpreter = KenSourceInterpreter.from(source)
+    val titleWithKeywords: String
+        get() {
+            return title + " " + kenConfig.keywords.joinToString(" #", "#", "", 3)
+        }
 
-        return kenSourceInterpreter.getKenConfigSource()
-    }
+    val strKeywords: String
+        get() {
+            return kenConfig.keywords.joinToString(" #", "#")
+        }
 
-    fun getKenConfig(): KenConfig {
-        return genSourceInterpreter().kenConfig
-    }
+    val kenConfig: KenConfig
+        get() {
+            return sourceInterpreter.kenConfig
+        }
 
-    fun genSourceInterpreter(): KenSourceInterpreter {
-        return KenSourceInterpreter.from(source)
-    }
+    val sourceInterpreter: KenSourceInterpreter
+        get() {
+            return KenSourceInterpreter.from(source)
+        }
 }
