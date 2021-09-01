@@ -2,8 +2,10 @@ package com.jhs.wiken.vo
 
 import com.jhs.wiken.service.MemberService
 import com.jhs.wiken.util.Ut
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -14,8 +16,12 @@ import javax.servlet.http.HttpServletResponse
 class Rq(
     private val req: HttpServletRequest,
     private val resp: HttpServletResponse,
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val environment: Environment
 ) {
+    @Value("\${custom.deploymentVersion}")
+    lateinit var deploymentVersion: String
+
     // 완벽
     // 인증된 이메일
     var verifiedEmail: String
@@ -303,5 +309,13 @@ class Rq(
     fun regenLoginInfoOnSession() {
         val member = memberService.getMemberById(loginedMemberId)!!
         genLoginInfoOnSession(member)
+    }
+
+    fun resource(uri: String): String {
+        if (environment.activeProfiles[0]!! == "production") {
+            return uri + "?version=" + deploymentVersion
+        }
+
+        return "/rawResource?uri=${uri}&rand=" + (1..10000).random()
     }
 }
