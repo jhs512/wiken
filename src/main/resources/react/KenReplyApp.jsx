@@ -15,7 +15,7 @@ const KenReplyApp = () => {
     <div className={classnames('', 'mx-auto', 'w-[450px]', 'bg-[#ff00ff55]')}>
       <p>You clicked {count} times</p>
       <button onClick={() => setCount(count + 1)}>
-        Click me
+        ㅇㅇㅇ
       </button>
     </div>
   );

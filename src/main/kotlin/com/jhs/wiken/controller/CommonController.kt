@@ -9,6 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.function.Consumer
+import javax.servlet.http.HttpServletResponse
 
 
 @Controller
@@ -17,7 +18,9 @@ class CommonController(
 ) {
     @RequestMapping("/rawResource")
     @ResponseBody
-    fun showRawResource(uri: String, ): String {
+    fun showRawResource(uri: String, resp: HttpServletResponse): String {
+        resp.setHeader("Cache-Control","no-cache");
+
         if (!uri.startsWith("/resource/")) {
             return "";
         }

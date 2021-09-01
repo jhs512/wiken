@@ -29946,7 +29946,7 @@ var KenReplyApp = function KenReplyApp() {
     onClick: function onClick() {
       return setCount(count + 1);
     }
-  }, "Click me"));
+  }, "\u3147\u3147\u3147"));
 };
 
 (0,react_dom__WEBPACK_IMPORTED_MODULE_2__.render)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(KenReplyApp, null), document.getElementById('KenReplyApp'));

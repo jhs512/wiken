@@ -17,6 +17,9 @@
   </div>
 
   <div id="KenReplyApp"></div>
-  <script th:src="${@rq.resource('/resource/react/KenReplyApp.bundle.js')}"></script>
+	<script src="/resource/react/KenReplyApp.bundle.js"></script>
+	<!--
+	[(${@rq.renderJs('/resource/react/KenReplyApp.bundle.js')})]
+	-->
 </main>
 </html>
