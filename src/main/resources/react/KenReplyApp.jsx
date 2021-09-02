@@ -7,7 +7,7 @@ const KenReplyApp = () => {
 
   // componentDidMount, componentDidUpdate와 같은 방식으로
   useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
+    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.!!
     document.title = `You clicked ${count} times`;
   });
 
@@ -15,7 +15,7 @@ const KenReplyApp = () => {
     <div className={classnames('', 'mx-auto', 'w-[450px]', 'bg-[#ff00ff55]')}>
       <p>You clicked {count} times</p>
       <button onClick={() => setCount(count + 1)}>
-        ㅇㅇㅇ
+        대단하다.!!!
       </button>
     </div>
   );

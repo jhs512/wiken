@@ -8,7 +8,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: jangka512@gmail.com
-    password: 지메일 앱 비밀번호
+    password: txswtqmkqlqjsjpwipbtj
     properties:
       mail:
         smtp:
@@ -25,6 +25,7 @@ spring:
 mybatis:
   type-aliases-package: com.jhs.wiken.vo
 custom:
+  deploymentVersion: @project.version@
   siteName : 위캔
   siteMainUri: http://localhost:8077
   notifyEmailFrom: no-reply@no-reply.com

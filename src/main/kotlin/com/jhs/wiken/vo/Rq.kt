@@ -325,7 +325,11 @@ class Rq(
             return "$uri?version=$deploymentVersion"
         }
 
-        return "/rawResource?rand=" + (1..10000).random() + "&uri=${Ut.getUriEncoded(uri)}"
+        if ( uri.endsWith(".js") ) {
+            return "http://127.0.0.1:7999/src/main/resources/static${uri}"
+        }
+
+        return "http://127.0.0.1:7999/static${uri}"
     }
 
     fun renderCss(uri: String): String {

@@ -94,10 +94,7 @@
 	
 	<script src="/resource/toastr_custom.js"></script>
 	
-	<link rel="stylesheet" href="/resource/dist.css">
-	<!--
-	[(${@rq.renderCss('/resource/dist.css')})]
-	-->
+	<link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/dist.css')}">
 	
 	<script th:inline="javascript" defer>
     const params = /*[[ ${param} ]]*/ null;

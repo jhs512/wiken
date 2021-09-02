@@ -44,4 +44,4 @@ LOG_PATH_IS_UNDEFINED/
 src/main/resources/static/resource/dist.css
 src/main/resources/application.yml
 
-src/main/resources/react
+src/main/resources/static/resource/react
