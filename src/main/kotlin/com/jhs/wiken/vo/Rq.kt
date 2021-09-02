@@ -2,9 +2,16 @@ package com.jhs.wiken.vo
 
 import com.jhs.wiken.service.MemberService
 import com.jhs.wiken.util.Ut
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Scope
 import org.springframework.context.annotation.ScopedProxyMode
+import org.springframework.core.env.Environment
+import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.util.function.Consumer
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -14,8 +21,16 @@ import javax.servlet.http.HttpServletResponse
 class Rq(
     private val req: HttpServletRequest,
     private val resp: HttpServletResponse,
-    private val memberService: MemberService
+    private val memberService: MemberService,
+    private val environment: Environment
 ) {
+    @Value("\${custom.deploymentVersion}")
+    lateinit var deploymentVersion: String
+
+    val isProductionMode: Boolean by lazy {
+        environment.activeProfiles[0]!! == "production"
+    }
+
     // 완벽
     // 인증된 이메일
     var verifiedEmail: String
@@ -303,5 +318,53 @@ class Rq(
     fun regenLoginInfoOnSession() {
         val member = memberService.getMemberById(loginedMemberId)!!
         genLoginInfoOnSession(member)
+    }
+
+    fun getResourceUri(uri: String): String {
+        if (isProductionMode) {
+            return "$uri?version=$deploymentVersion"
+        }
+
+        return "/rawResource?rand=" + (1..10000).random() + "&uri=${Ut.getUriEncoded(uri)}"
+    }
+
+    fun renderCss(uri: String): String {
+        if (isProductionMode) {
+            return """<link rel="stylesheet" href="${uri}">"""
+        }
+
+        if (!uri.startsWith("/resource/")) {
+            return "";
+        }
+
+        val resource = ClassPathResource("static/${uri}")
+        val str = StringBuilder()
+        val path: Path = Paths.get(resource.uri)
+        val content: List<String> = Files.readAllLines(path)
+        content.forEach(Consumer { x: String? -> str.append(x + "\n") })
+
+        return """<style>
+            ${str}
+            </style>""".trimMargin()
+    }
+
+    fun renderJs(uri: String): String {
+        if (isProductionMode) {
+            return """<script src="${uri}"></script>"""
+        }
+
+        if (!uri.startsWith("/resource/")) {
+            return "";
+        }
+
+        val resource = ClassPathResource("static/${uri}")
+        val str = StringBuilder()
+        val path: Path = Paths.get(resource.uri)
+        val content: List<String> = Files.readAllLines(path)
+        content.forEach(Consumer { x: String? -> str.append(x + "\n") })
+
+        return """<script>
+            ${str}
+            </script>""".trimMargin()
     }
 }

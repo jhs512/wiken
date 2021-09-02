@@ -3,7 +3,7 @@ module.exports = {
   purge: [
     "./src/main/kotlin/**/*.kt",
     "./src/main/resources/templates/**/*.{js,html}",
-    "./src/main/resources/static/**/*.{js,html}",
+    "./src/main/resources/react/**/*.{js,jsx,html}",
   ],
   darkMode: 'class', // or 'media' or 'class'
   theme: {

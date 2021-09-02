@@ -9,7 +9,6 @@
     if ( toastUiThemeName ) {
     	toastUiThemeName = toastUiThemeName.replace('my', '');
     }
-	
 	</script>
 	<meta charset="UTF-8">
 	<meta name="viewport"
@@ -96,6 +95,9 @@
 	<script src="/resource/toastr_custom.js"></script>
 	
 	<link rel="stylesheet" href="/resource/dist.css">
+	<!--
+	[(${@rq.renderCss('/resource/dist.css')})]
+	-->
 	
 	<script th:inline="javascript" defer>
     const params = /*[[ ${param} ]]*/ null;
@@ -110,14 +112,10 @@
         }, 500);
     	}
     }
-	
-	
 	</script>
 	
 	<style>
     [(${blogCss})]
-	
-	
 	</style>
 	
 	<script>
@@ -141,6 +139,7 @@
 				}
 			);
 		}
+	
 	
 	
 	</script>
@@ -276,7 +275,8 @@
 				
 				<ul class="flex mr-[-10px] overflow-x-auto">
 					<li th:unless="${@rq.logined}">
-						<a th:href="|||/member/join?afterLoginUri=${@rq.encodedCurrentUri}|||" class="h-full flex items-center hover:underline px-[10px]">
+						<a th:href="|||/member/join?afterLoginUri=${@rq.encodedCurrentUri}|||"
+							 class="h-full flex items-center hover:underline px-[10px]">
 							<span><i class="fas fa-user-plus"></i></span>
 							<span class="hidden lg:block">&nbsp;</span>
 							<span class="hidden lg:block">회원가입</span>
@@ -284,7 +284,8 @@
 					</li>
 					
 					<li th:unless="${@rq.logined}">
-						<a th:href="|||/member/login?afterLoginUri=${@rq.encodedCurrentUri}|||" class="h-full flex items-center hover:underline px-[10px]">
+						<a th:href="|||/member/login?afterLoginUri=${@rq.encodedCurrentUri}|||"
+							 class="h-full flex items-center hover:underline px-[10px]">
 							<span><i class="fas fa-sign-in-alt"></i></span>
 							<span class="hidden lg:block">&nbsp;</span>
 							<span class="hidden lg:block">로그인</span>
@@ -292,7 +293,8 @@
 					</li>
 					
 					<li th:if="${@rq.logined}">
-						<a th:href="|||/member/doLogout?replaceUri=${@rq.encodedCurrentUri}|||" class="h-full flex items-center hover:underline px-[10px]">
+						<a th:href="|||/member/doLogout?replaceUri=${@rq.encodedCurrentUri}|||"
+							 class="h-full flex items-center hover:underline px-[10px]">
 							<span><i class="fas fa-sign-out-alt"></i></span>
 							<span class="hidden lg:block">&nbsp;</span>
 							<span class="hidden lg:block">로그아웃</span>
@@ -300,7 +302,8 @@
 					</li>
 					
 					<li th:if="${@rq.logined}">
-						<a target="_blank" href="/member/modify" class="h-full flex items-center hover:underline px-[10px] indicator">
+						<a target="_blank" href="/member/modify"
+							 class="h-full flex items-center hover:underline px-[10px] indicator">
 							<span><i class="fas fa-user-cog"></i></span>
 							<span class="hidden lg:block">&nbsp;</span>
 							<span class="hidden lg:block">내정보</span>
@@ -363,7 +366,7 @@
 				<span class="hidden sm:block">글 수정</span>
 			</a>
 			
-			<a  th:if="${@rq.logined}" target="_blank" href="/ken" class="flex items-center hover:underline px-[10px]">
+			<a th:if="${@rq.logined}" target="_blank" href="/ken" class="flex items-center hover:underline px-[10px]">
 				<span><i class="fas fa-pen"></i></span>
 				<span class="hidden lg:block">&nbsp;</span>
 				<span class="hidden lg:block">새 글</span>
