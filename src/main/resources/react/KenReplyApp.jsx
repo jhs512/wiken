@@ -5,18 +5,14 @@ import { render } from 'react-dom';
 const KenReplyApp = () => {
   const [count, setCount] = useState(0);
 
-  // componentDidMount, componentDidUpdate와 같은 방식으로
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.!!
     document.title = `You clicked ${count} times`;
-  });
+  }, [count]);
 
   return (
-    <div className={classnames('', 'mx-auto', 'w-[450px]', 'bg-[#ff00ff55]')}>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        대단하다.!!!
-      </button>
+    <div className={classnames('', 'mx-auto', 'w-[711px]', 'bg-[#00ffff55]')}>
+      댓글이 구현될 예정입니다!!
     </div>
   );
 }
