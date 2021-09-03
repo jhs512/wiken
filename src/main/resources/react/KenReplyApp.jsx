@@ -1,23 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import {classnames} from 'tailwindcss-classnames';
-import { render } from 'react-dom';
+import React, { useState, useEffect } from "react";
+import { NewTodoForm } from "./KenReplyApp/NewTodoForm";
+import { TodoList } from "./KenReplyApp/TodoList";
+import { render } from "react-dom";
 
 const KenReplyApp = () => {
-  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([
+    { id: 1, title: "제목1" },
+    { id: 2, title: "제목2" },
+  ]);
 
-  useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.!!
-    document.title = `You clicked ${count} times`;
-  }, [count]);
+  const [todosLastId, setTodosLastId] = useState(todos.length);
+
+  const addTodo = (title) => {
+    const id = todosLastId + 1;
+    const todo = {
+      id,
+      title,
+    };
+    setTodos([...todos, todo]);
+    setTodosLastId(id);
+  };
+
+  const modifyTodo = (id, title) => {
+    setTodos(todos.map((todo) => (todo.id != id ? todo : { ...todo, title })));
+  };
+
+  const deleteTodo = (id) => setTodos(todos.filter((todo) => todo.id != id));
 
   return (
-    <div className={classnames('', 'mx-auto', 'w-[711px]', 'bg-[#00ffff55]')}>
-      댓글이 구현될 예정입니다!!
+    <div className="container mx-auto">
+      <NewTodoForm addTodo={addTodo} />
+
+      <TodoList todos={todos} modifyTodo={modifyTodo} deleteTodo={deleteTodo} />
     </div>
   );
-}
+};
 
-render(
-  <KenReplyApp />,
-  document.getElementById('KenReplyApp')
-);
+render(<KenReplyApp />, document.getElementById("KenReplyApp"));
