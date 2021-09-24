@@ -231,12 +231,16 @@ function configPlugin() {
   return { toHTMLRenderers };
 }
 
+function ToastEditor__escape(origin) {
+    return origin.replace(/t-script/gi, "script");
+}
+
 function ToastEditor__init() {
   $(".toast-ui-editor").each(function (index, node) {
     const $node = $(node);
     const $initialValueEl = $node.find(" > script");
     const initialValue =
-      $initialValueEl.length == 0 ? "" : $initialValueEl.html().trim();
+      $initialValueEl.length == 0 ? "" : ToastEditor__escape($initialValueEl.html().trim());
 
     const editor = new toastui.Editor({
       el: node,
@@ -287,7 +291,7 @@ function ToastEditorView__init() {
     const $node = $(node);
     const $initialValueEl = $node.find(" > script");
     const initialValue =
-      $initialValueEl.length == 0 ? "" : $initialValueEl.html().trim();
+      $initialValueEl.length == 0 ? "" : ToastEditor__escape($initialValueEl.html().trim());
     $node.empty();
 
     let viewer = new toastui.Editor.factory({

@@ -84,9 +84,9 @@
 		<script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
 		
 		<!-- 토스트 UI 에디터 관련 CSS -->
-		<link rel="stylesheet" href="/resource/toast_ui_editor_custom.css">
+		<link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/toast_ui_editor_custom.css')}">
 		<!-- 토스트 UI 에디터 관련 JS -->
-		<script src="/resource/toast_ui_editor_custom.js"></script>
+		<script th:src="${@rq.getResourceUri('/resource/toast_ui_editor_custom.js')}"></script>
 	</th:block>
 	
 	<!-- 커스텀 CSS -->

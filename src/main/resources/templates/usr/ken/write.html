@@ -42,7 +42,7 @@
       <div class="toast-ui-editor toast-ui-editor--body h-full" data-toast-editor-height="100%;"
            data-toast-editor-placeholder="note ..">
         <script th:if="${ken != null}" type="text/x-template">
-[(${ken.source})]
+[(${ken.sourceForPrint})]
         </script>
         <script th:unless="${ken != null}" type="text/x-template">
 $$config

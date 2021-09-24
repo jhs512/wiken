@@ -9,6 +9,11 @@ data class Ken(
     val source: String,
     val result: String,
 ) {
+    val sourceForPrint: String
+        get() {
+            return source.replace("script", "t-script")
+        }
+
     val titleWithKeywords: String
         get() {
             return title + " " + kenConfig.keywords.joinToString(" #", "#", "", 3)
