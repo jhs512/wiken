@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  vscode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VARIANT: "16"
+        INSTALL_MAVEN: "true"
+        INSTALL_GRADLE: "false"
+        NODE_VERSION: "16"
+    depends_on:
+      - db
+    volumes:
+      - ../:/workspaces/wiken:cached
+    environment:
+      TZ: Asia/Seoul
+    command: sleep infinity
+    network_mode: service:db
+  db:
+    image: mariadb:10.6
+    environment:
+      TZ: UTC
+      MARIADB_RANDOM_ROOT_PASSWORD: 'yes'
+      MARIADB_DATABASE: wikenDevelopment
+      MARIADB_USER: sbsst
+      MARIADB_PASSWORD: sbs123414
+    volumes:
+      - ../db/schema.sql:/docker-entrypoint-initdb.d/wiken.sql
