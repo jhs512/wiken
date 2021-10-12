@@ -23,9 +23,9 @@
     "webpack-dev-server": "^4.1.0"
   },
   "scripts": {
-    "css": "npx tailwindcss -i src/main/resources/static/resource/source.css -o src/main/resources/static/resource/dist.css --watch --postcss",
+    "css": "tailwindcss -i src/main/resources/static/resource/source.css -o src/main/resources/static/resource/dist.css --watch --postcss",
     "dev": "webpack serve --mode=development",
-    "css:build": "npx tailwindcss -i src/main/resources/static/resource/source.css -o src/main/resources/static/resource/dist.css --postcss",
+    "css:build": "tailwindcss -i src/main/resources/static/resource/source.css -o src/main/resources/static/resource/dist.css --postcss",
     "webpack:build": "webpack --mode=production",
     "build": "npm run css:build && npm run webpack:build"
   }
