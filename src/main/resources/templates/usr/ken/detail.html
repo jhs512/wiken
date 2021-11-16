@@ -8,7 +8,7 @@
 <main layout:fragment="main">
   <div class="container min-h-full mx-auto px-[8px] py-10">
     <h1 class="font-bold text-4xl">[[${ken.title}]]</h1>
-		<h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
+    <h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
     <div class="toast-ui-viewer mt-4">
       <script type="text/x-template">
         [(${ken.sourceForPrint})]
@@ -17,7 +17,7 @@
   </div>
 
   <div id="KenReplyApp" class="hidden"></div>
-	<script th:src="${@rq.getResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
-	
+  <script th:src="${@rq.getBundleJsResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
+
 </main>
 </html>

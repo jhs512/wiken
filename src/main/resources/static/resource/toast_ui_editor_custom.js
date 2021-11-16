@@ -231,6 +231,20 @@ function configPlugin() {
   return { toHTMLRenderers };
 }
 
+function hidePlugin() {
+  const toHTMLRenderers = {
+    hide(node) {
+      return [
+        { type: "openTag", tagName: "div", outerNewLine: true },
+        { type: "html", content: "" },
+        { type: "closeTag", tagName: "div", outerNewLine: true }
+      ];
+    }
+  };
+
+  return { toHTMLRenderers };
+}
+
 function ToastEditor__escape(origin) {
     return origin.replace(/t-script/gi, "script");
 }
@@ -259,7 +273,8 @@ function ToastEditor__init() {
         youtubePlugin,
         codepenPlugin,
         replPlugin,
-        configPlugin
+        configPlugin,
+        hidePlugin
       ],
       customHTMLSanitizer: (html) => {
         return (
@@ -308,7 +323,8 @@ function ToastEditorView__init() {
         youtubePlugin,
         codepenPlugin,
         replPlugin,
-        configPlugin
+        configPlugin,
+        hidePlugin
       ],
       customHTMLSanitizer: (html) => {
         return (
