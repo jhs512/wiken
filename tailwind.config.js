@@ -4,6 +4,8 @@ module.exports = {
     "./src/main/kotlin/**/*.kt",
     "./src/main/resources/templates/**/*.{js,html}",
     "./src/main/resources/react/**/*.{js,jsx,html}",
+    "./src/main/resources/static/resource/common.js",
+    "./src/main/resources/static/resource/toast_ui_editor_custom.js",
   ],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
