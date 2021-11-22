@@ -14,21 +14,17 @@
         return;
       }
 
-      const bodyEditor = $(form).find('.toast-ui-editor--body').data('data-toast-editor');
+      form.source.value = form.source.value.trim();
 
-      const source = bodyEditor.getMarkdown().trim();
-      const result = bodyEditor.getHTML().trim();
-
-      if ( source.length == 0 ) {
-        bodyEditor.focus();
+      if ( form.source.value.length == 0 ) {
+        form.source.focus();
         alert('내용을 입력해주세요.');
         return;
       }
 
       KenWrite__submitDone = true;
 
-      form.source.value = source;
-      form.result.value = result;
+      form.result.value = "없음";
 
       form.submit();
     }
@@ -36,15 +32,10 @@
   <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST" onsubmit="KenWrite__submit(); return false;"
         class="flex-grow flex flex-col">
     <input type="hidden" name="id" th:value="${ken != null ? ken.id : 0}">
-    <input type="hidden" name="source">
     <input type="hidden" name="result">
     <div class="flex-grow h-0">
-      <div class="toast-ui-editor toast-ui-editor--body h-full" data-toast-editor-height="100%;"
-           data-toast-editor-placeholder="note ..">
-        <script th:if="${ken != null}" type="text/x-template">
-[(${ken.sourceForPrint})]
-        </script>
-        <script th:unless="${ken != null}" type="text/x-template">
+      <textarea name="source" class="w-full h-full textarea textarea-bordered" resize="false" th:if="${ken != null}">[(${ken.sourceForPrint})]</textarea>
+      <textarea name="source" class="w-full h-full textarea textarea-bordered" resize="false" th:unless="${ken != null}">
 $$config
 title: New Title
 keywords:
@@ -52,9 +43,7 @@ keywords:
   - ...
 $$
 
-# Subject 1
-        </script>
-      </div>
+# Subject 1</textarea>
     </div>
   </form>
 </main>
