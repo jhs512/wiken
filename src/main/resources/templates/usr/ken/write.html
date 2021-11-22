@@ -7,6 +7,38 @@
 
 <main layout:fragment="main">
   <script>
+    alert('오늘만 나오는 공지사항\n\n크롬버그로 위캔 업데이트 했습니다.\n\nCtrl + Shift + R 을 한번 누르시면 프로그램 업데이트가 확실히 이루어 집니다. 한번만 누르시면 됩니다.\n\n새 기능 : Ctrl + Shift + Alt + R 을 누르시면 미리보기 모드를 토글할 수 있습니다.');
+
+    let previewPageScrollTop = 0;
+
+    function closePreview() {
+      previewPageScrollTop = $('html').scrollTop();
+      $('.toast-ui-editor--bodyViewer').toggleClass('hidden');
+      $('.close-preview').text('Preview On');
+    }
+
+    function showPreview() {
+      $('.close-preview').text('Preview Off');
+      const form = document['ken-write-form'];
+      const bodyEditorViewer = $(form).find('.toast-ui-editor--bodyViewer').data('data-toast-editor');
+      const source = CodeMirrorEditor__editor.getValue();
+
+      bodyEditorViewer.setMarkdown(source);
+      $('.toast-ui-editor--bodyViewer').toggleClass('hidden');
+      setTimeout(() => $('html').scrollTop(previewPageScrollTop), 100);
+    }
+
+    function togglePreview() {
+      if ( $('.toast-ui-editor--bodyViewer').hasClass('hidden') == false ) {
+        closePreview();
+        return;
+      }
+
+      showPreview();
+    }
+
+    keyboardJS.bind('ctrl + alt + shift + p', togglePreview);
+
     let KenWrite__submitDone = false;
     function KenWrite__submit() {
       const form = document['ken-write-form'];
@@ -14,36 +46,83 @@
         return;
       }
 
-      form.source.value = form.source.value.trim();
+      const bodyEditor = $(form).find('.toast-ui-editor--body').data('data-toast-editor');
+      const bodyEditorViewer = $(form).find('.toast-ui-editor--bodyViewer').data('data-toast-editor');
 
-      if ( form.source.value.length == 0 ) {
-        form.source.focus();
+      const source = CodeMirrorEditor__editor.getValue();
+      bodyEditor.setMarkdown(source);
+      const result = bodyEditor.getHTML().trim();
+
+      if ( source.length == 0 ) {
+        CodeMirrorEditor__editor.focus();
         alert('내용을 입력해주세요.');
         return;
       }
 
       KenWrite__submitDone = true;
 
-      form.result.value = "없음";
+      form.source.value = source;
+      form.result.value = result;
 
       form.submit();
     }
+
   </script>
-  <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST" onsubmit="KenWrite__submit(); return false;"
+  <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST"
+        onsubmit="KenWrite__submit(); return false;"
         class="flex-grow flex flex-col">
     <input type="hidden" name="id" th:value="${ken != null ? ken.id : 0}">
+    <input type="hidden" name="source">
     <input type="hidden" name="result">
     <div class="flex-grow h-0">
-      <textarea name="source" class="w-full h-full textarea textarea-bordered" resize="false" th:if="${ken != null}">[(${ken.sourceForPrint})]</textarea>
-      <textarea name="source" class="w-full h-full textarea textarea-bordered" resize="false" th:unless="${ken != null}">
+      <div class="toast-ui-editor toast-ui-editor--body h-full hidden" data-toast-editor-height="100%;"
+           data-toast-editor-placeholder="note ..">
+        <script type="text/x-template"></script>
+      </div>
+      <div class="toast-ui-viewer toast-ui-editor--bodyViewer absolute inset-0 z-10 h-full hidden bg-white p-3"
+           data-toast-editor-height="100%;"
+           data-toast-editor-placeholder="note ..">
+        <script type="text/x-template"></script>
+      </div>
+      <script th:if="${ken != null}" type="text/x-template">
+        [(${ken.sourceForPrint})]
+      </script>
+      <script th:unless="${ken != null}" type="text/x-template">
 $$config
 title: New Title
 keywords:
-  - IT
-  - ...
+- IT
+- ...
 $$
 
-# Subject 1</textarea>
+# Subject 1
+- 단축키 : ctrl + alt + shift + p 로 미리보기 모드를 끄고, 켤 수 있습니다.
+      </script>
+      <textarea class="codemirror--body"></textarea>
+      <script>
+        const CodeMirrorEditor__originSource = $('.codemirror--body').prev().html();
+        var CodeMirrorEditor__editor = CodeMirror.fromTextArea($('.codemirror--body').get(0), {
+          lineNumbers: true,
+          styleActiveLine: true,
+        });
+
+        CodeMirrorEditor__editor.setValue(CodeMirrorEditor__originSource.trim());
+
+      </script>
+      <style>
+        .codemirror--body + * {
+          height:100%;
+        }
+
+        .codemirror--body + *  .CodeMirror-linenumber.CodeMirror-gutter-elt {
+          font-family: monospace;
+          font-weight:bold;
+        }
+
+      </style>
+    </div>
+    <div class="close-preview fixed top-0 right-0 m-3 mt-10 z-10 p-1 bg-gray-500 rounded" onclick="togglePreview();">
+      Preview On
     </div>
   </form>
 </main>

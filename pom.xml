@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.jhs</groupId>
     <artifactId>wiken</artifactId>
-    <version>19</version>
+    <version>20</version>
     <packaging>war</packaging>
     <name>wiken</name>
     <description>Demo project for Spring Boot</description>

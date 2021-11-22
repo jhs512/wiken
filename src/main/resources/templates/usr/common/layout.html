@@ -88,7 +88,18 @@
     <link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/toast_ui_editor_custom.css')}">
     <!-- 토스트 UI 에디터 관련 JS -->
     <script th:src="${@rq.getResourceUri('/resource/toast_ui_editor_custom.js')}"></script>
+
+    <!-- 코드 mirror -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.js'></script>
+    <link rel='stylesheet prefetch' href='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css'>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/selection/active-line.min.js"></script>
+
+    <!-- 단축키 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/keyboardjs/2.3.3/keyboard.min.js"></script>
   </th:block>
+
 
   <!-- 커스텀 CSS -->
   <script src="/resource/common.js"></script>
@@ -139,10 +150,6 @@
 				}
 			);
 		}
-	
-	
-	
-
   </script>
 </head>
 
