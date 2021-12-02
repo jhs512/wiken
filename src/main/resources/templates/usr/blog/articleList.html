@@ -8,7 +8,8 @@
 <main layout:fragment="main">
 	<section class="section section-my-list">
 		<div class="container mx-auto px-3 pt-3">
-			<div class="overflow-x-auto">
+			<div class="mt-4" th:text="|||게시물 수 : ${articles.size}|||"></div>
+			<div class="overflow-x-auto mt-3">
 				<table class="table w-full">
 					<colgroup>
 						<col width="30">
