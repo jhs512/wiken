@@ -11,7 +11,7 @@ data class Ken(
 ) {
     val sourceForPrint: String
         get() {
-            return source.replace("script", "t-script")
+            return source.replace("<script", "<t-script").replace("</script", "</t-script")
         }
 
     val titleWithKeywords: String

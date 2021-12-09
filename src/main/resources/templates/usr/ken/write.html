@@ -108,7 +108,7 @@ $$
       </script>
       <textarea class="codemirror--body"></textarea>
       <script>
-        const CodeMirrorEditor__originSource = $('.codemirror--body').prev().html();
+        const CodeMirrorEditor__originSource = ToastEditor__escape($('.codemirror--body').prev().html());
         var CodeMirrorEditor__editor = CodeMirror.fromTextArea($('.codemirror--body').get(0), {
           lineNumbers: true,
           styleActiveLine: true,
