@@ -246,7 +246,7 @@ function hidePlugin() {
 }
 
 function ToastEditor__escape(origin) {
-    return origin.replace(/t-script/gi, "script");
+    return origin.replaceAll('<t-script', "<script").replaceAll('</t-script', "</script");
 }
 
 function ToastEditor__init() {
