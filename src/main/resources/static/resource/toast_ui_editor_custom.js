@@ -348,10 +348,37 @@ function ToastEditorView__init() {
     });
 
     $node.data("data-toast-editor", viewer);
+
+    $node.find('a').attr('target', '_blank');
+
+    $node.find('h1,h2,h3').each(function(index, node) {
+      const $node = $(node);
+
+      const hash = strToHtmlHash($node.text());
+
+      $node.attr('id', hash);
+      $node.css('scroll-margin-top', '10px');
+    })
   });
+}
+
+let tryToGoHashEl__callCount = 0;
+
+function tryToGoHashEl() {
+  tryToGoHashEl__callCount++;
+
+  if ( tryToGoHashEl__callCount == 10 ) {
+    return;
+  }
+
+  if ( urlHash && urlHashEl == null ) {
+    urlHashEl = document.getElementById(urlHash);
+    setTimeout(() => urlHashEl.scrollIntoView(), 500);
+  }
 }
 
 $(function () {
   ToastEditor__init();
   ToastEditorView__init();
+  tryToGoHashEl();
 });

@@ -82,14 +82,14 @@
 					<label class="label">
 						<span class="label-text">로그인아이디</span>
 					</label>
-					<input type="text" name="loginId" placeholder="로그인아이디" class="input input-bordered" maxlength="20" th:value="${param.loginId}">
+					<input type="text" name="loginId" placeholder="로그인아이디" class="input input-bordered" maxlength="50" th:value="${param.loginId}">
 				</div>
 				
 				<div class="form-control">
 					<label class="label">
 						<span class="label-text">로그인비밀번호</span>
 					</label>
-					<input th:autofocus="${param.loginId != null}" type="password" name="loginPwInput" placeholder="로그인비밀번호" class="input input-bordered" maxlength="20">
+					<input th:autofocus="${param.loginId != null}" type="password" name="loginPwInput" placeholder="로그인비밀번호" class="input input-bordered" maxlength="50">
 				</div>
 				
 				<div class="btns mt-3 flex justify-center px-1">
