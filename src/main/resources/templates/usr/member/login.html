@@ -1,20 +1,23 @@
 <!doctype html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
-			layout:decorate="~{usr/common/layout}">
+      layout:decorate="~{usr/common/layout}">
 
 <head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-	
-	<title>로그인</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
+    <title>로그인</title>
 </head>
 
 <main layout:fragment="main">
-	<section class="section section-login flex-grow flex items-center justify-center">
-		
-		<div class="flex-grow max-w-md px-2 pt-4">
-			<h1 class="font-bold text-lg">로그인</h1>
-			
-			<script>
+    <script>
+        alert('27일까지 나오는 공지사항\n\n# 안내사항\n- 미리보기 토글 단축키가 Ctrl + P 로 변경되었습니다.\n- 로그인세션의 유지기간이 30일로 변경되었습니다. 이제 자동로그아웃으로 인한 글 날림이 없어졌습니다.\n- 공용PC에서는 꼭 작업 후 로그아웃을 해주세요.\n- 에디터 첫 로딩시 하단부분짤림 버그가 수정되었습니다.\n- 위캔문서에서 링크클릭시 새창으로 뜹니다.\n- 위캔문서를 수정하는 중에 저장하지 않고 페이지를 끄려는 시도를 하면 확인창이 뜹니다.\n- Ctrl + Shift + R 을 한번 누르시면 프로그램 업데이트가 확실하게 이루어 집니다.');
+    </script>
+    <section class="section section-login flex-grow flex items-center justify-center">
+
+        <div class="flex-grow max-w-md px-2 pt-4">
+            <h1 class="font-bold text-lg">로그인</h1>
+
+            <script>
 				let MemberLogin__submitDone = false;
 				function MemberLogin__submit(form) {
 					if ( MemberLogin__submitDone ) {
@@ -71,40 +74,44 @@
 						}
 					);
 				}
-			</script>
-			
-			<form class="flex flex-col"
-						onsubmit="MemberLogin__submit(this); return false;">
-				<input type="hidden" name="ajaxMode" value="Y">
-				<input type="hidden" name="loginPw">
-				
-				<div class="form-control">
-					<label class="label">
-						<span class="label-text">로그인아이디</span>
-					</label>
-					<input type="text" name="loginId" placeholder="로그인아이디" class="input input-bordered" maxlength="50" th:value="${param.loginId}">
-				</div>
-				
-				<div class="form-control">
-					<label class="label">
-						<span class="label-text">로그인비밀번호</span>
-					</label>
-					<input th:autofocus="${param.loginId != null}" type="password" name="loginPwInput" placeholder="로그인비밀번호" class="input input-bordered" maxlength="50">
-				</div>
-				
-				<div class="btns mt-3 flex justify-center px-1">
-					<input class="btn btn-primary w-1/2" type="submit" value="로그인">
-					<div class="w-2 flex-shrink-0"></div>
-					<a href="/member/join" class="btn btn-secondary btn-outline w-1/2">가입하기</a>
-				</div>
-				
-				<div class="btns mt-3 flex justify-center">
-					<a href="/member/findLoginId" class="btn btn-link">아이디찾기</a>
-					<a href="/member/findLoginPw" class="btn btn-link">비밀번호 찾기</a>
-				</div>
-			</form>
-		</div>
-	</section>
+
+
+            </script>
+
+            <form class="flex flex-col"
+                  onsubmit="MemberLogin__submit(this); return false;">
+                <input type="hidden" name="ajaxMode" value="Y">
+                <input type="hidden" name="loginPw">
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">로그인아이디</span>
+                    </label>
+                    <input type="text" name="loginId" placeholder="로그인아이디" class="input input-bordered" maxlength="50"
+                           th:value="${param.loginId}">
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">로그인비밀번호</span>
+                    </label>
+                    <input th:autofocus="${param.loginId != null}" type="password" name="loginPwInput"
+                           placeholder="로그인비밀번호" class="input input-bordered" maxlength="50">
+                </div>
+
+                <div class="btns mt-3 flex justify-center px-1">
+                    <input class="btn btn-primary w-1/2" type="submit" value="로그인">
+                    <div class="w-2 flex-shrink-0"></div>
+                    <a href="/member/join" class="btn btn-secondary btn-outline w-1/2">가입하기</a>
+                </div>
+
+                <div class="btns mt-3 flex justify-center">
+                    <a href="/member/findLoginId" class="btn btn-link">아이디찾기</a>
+                    <a href="/member/findLoginPw" class="btn btn-link">비밀번호 찾기</a>
+                </div>
+            </form>
+        </div>
+    </section>
 </main>
 
 </html>
