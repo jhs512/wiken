@@ -128,6 +128,10 @@ $$
         const CodeMirrorEditor__originSource2 = ToastEditor__escape(CodeMirrorEditor__originSource.trim());
 
         CodeMirrorEditor__editor.setValue(CodeMirrorEditor__originSource2);
+        setTimeout(() => {
+          // 이걸 하는 이유는, cm 의 오류인 첫 렌더링시 부분적으로 하단이 짤리는 버그를 수정하기 위해서
+          CodeMirrorEditor__editor.getDoc().setCursor(7);
+        }, 400);
 
       </script>
       <style>
