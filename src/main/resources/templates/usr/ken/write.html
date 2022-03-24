@@ -64,9 +64,16 @@
       form.source.value = source;
       form.result.value = result;
 
+      $(window).unbind('beforeunload');
+
       form.submit();
     }
 
+    $(window).bind('beforeunload', function() {
+      let isChanged = CodeMirrorEditor__originSource2 != CodeMirrorEditor__editor.getValue();
+
+      if ( isChanged ) return '변경된 사항이 있습니다. 페이지에서 나가시겠습니까?';
+    });
   </script>
   <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST"
         onsubmit="KenWrite__submit(); return false;"
@@ -104,6 +111,11 @@ $$
 - 단어찾은 후 특정단어로 교체 : Shift-Ctrl-F / Cmd-Option-F
 - 단어찾은 후 특정단어로 교체(일괄) : Shift-Ctrl-R / Shift-Cmd-Option-F
 - 특정줄로 이동 : Alt-G
+
+$$hide
+- `$$hide` 구문으로 감싼 부분은 주석처리 됩니다.
+- 해당 부분은 뷰어에서는 보이지 않습니다.
+$$
       </script>
       <textarea class="codemirror--body"></textarea>
       <script>
@@ -113,7 +125,9 @@ $$
           styleActiveLine: true,
         });
 
-        CodeMirrorEditor__editor.setValue(ToastEditor__escape(CodeMirrorEditor__originSource.trim()));
+        const CodeMirrorEditor__originSource2 = ToastEditor__escape(CodeMirrorEditor__originSource.trim());
+
+        CodeMirrorEditor__editor.setValue(CodeMirrorEditor__originSource2);
 
       </script>
       <style>
