@@ -28,4 +28,153 @@ html .toastui-editor-contents>h2:first-of-type{
 .toast-ui-viewer {
   padding-top:10px;
 }
+
+html.ppt-popup-visible,
+html.ppt-popup-visible > body {
+  overflow:hidden;
+}
+
+.ppt-popup {
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:white;
+  z-index:100000;
+}
+
+.toast-ui-viewer--ppt {
+  padding:0;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents {
+  height:100vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div {
+  scroll-snap-align: start;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.h1-top h1:first-of-type {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  padding:20px 10px;
+  box-sizing:border-box;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-w-full > div {
+  width:100%;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-mx-10 > div {
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-mx-20 > div {
+  margin-left:20px;
+  margin-right:20px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-mx-30 > div {
+  margin-left:30px;
+  margin-right:30px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-mx-40 > div {
+  margin-left:40px;
+  margin-right:40px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-mx-50 > div {
+  margin-left:50px;
+  margin-right:50px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-max-w-screen-sm > div {
+  max-width:640px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-max-w-screen-md > div {
+  max-width:768px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-max-w-screen-lg > div {
+  max-width:1024px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-max-w-screen-xl > div {
+  max-width:1280px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.box-max-w-screen-2xl > div {
+  max-width:1536px;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div.h1-border-none h1 {
+  border-bottom-width:0;
+}
+
+.toast-ui-viewer--ppt .toastui-editor-contents > div > div {
+  min-width:320px;
+}
+
+.ppt-popup .btn-popup {
+  position:absolute;
+  top:0px;
+  right:0px;
+  width:50px;
+  height:50px;
+  cursor:pointer;
+  z-index:10;
+}
+
+.ppt-popup .btn-popup.hide {
+  opacity: 0;
+  transition: opacity 1s 1s;
+}
+
+.ppt-popup .page {
+  position:absolute;
+  bottom:0;
+  right:0;
+  margin:10px;
+  pointer-event:none;
+}
+
+.ppt-popup .page.hide {
+  opacity: 0;
+  transition: opacity 1s 1s;
+}
+
+.ppt-popup .btn-popup::before,
+.ppt-popup .btn-popup::after  {
+  content:"";
+  position:absolute;
+  top:45%;
+  height:10%;
+  left:20%;
+  width:60%;
+  background-color:#343434;
+  transform: rotate(45deg);
+}
+
+.ppt-popup .btn-popup::after {
+  transform: rotate(-45deg);
+}
+
+.ppt-popup h1 {
+  font-size:28px;
+  border-bottom-style:solid;
+  border-bottom-width:1px;
+}
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */

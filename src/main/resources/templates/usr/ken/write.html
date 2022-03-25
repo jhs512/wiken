@@ -2,11 +2,19 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{usr/common/layout}">
 <head>
-  <title>캔 생성</title>
+    <title>캔 생성</title>
 </head>
 
 <main layout:fragment="main">
-  <script>
+    <div class="ppt-popup fixed hidden">
+        <div class="btn-popup"></div>
+        <div class="toast-ui-viewer toast-ui-viewer--ppt h-full"
+             data-toast-editor-height="100%;"
+             data-toast-editor-placeholder="note ..">
+            <script type="text/x-template"></script>
+        </div>
+    </div>
+    <script>
     let previewPageScrollTop = 0;
 
     function closePreview() {
@@ -18,10 +26,13 @@
     function showPreview() {
       $('.close-preview').text('Preview Off');
       const form = document['ken-write-form'];
-      const bodyEditorViewer = $(form).find('.toast-ui-editor--bodyViewer').data('data-toast-editor');
+      const $node = $(form).find('.toast-ui-editor--bodyViewer');
+      const bodyEditorViewer = $node.data('data-toast-editor');
       const source = CodeMirrorEditor__editor.getValue();
 
       bodyEditorViewer.setMarkdown(source);
+      ToastEditorView__afterSetMarkdown($node);
+
       $('.toast-ui-editor--bodyViewer').toggleClass('hidden');
       setTimeout(() => $('html').scrollTop(previewPageScrollTop), 100);
     }
@@ -77,33 +88,40 @@
 
       if ( isChanged ) return '변경된 사항이 있습니다. 페이지에서 나가시겠습니까?';
     });
-  </script>
-  <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST"
-        onsubmit="KenWrite__submit(); return false;"
-        class="flex-grow flex flex-col">
-    <input type="hidden" name="id" th:value="${ken != null ? ken.id : 0}">
-    <input type="hidden" name="source">
-    <input type="hidden" name="result">
-    <div class="flex-grow h-0">
-      <div class="toast-ui-editor toast-ui-editor--body h-full hidden" data-toast-editor-height="100%;"
-           data-toast-editor-placeholder="note ..">
-        <script type="text/x-template"></script>
-      </div>
-      <div class="toast-ui-viewer toast-ui-editor--bodyViewer absolute inset-0 z-10 h-full hidden bg-white p-3"
-           data-toast-editor-height="100%;"
-           data-toast-editor-placeholder="note ..">
-        <script type="text/x-template"></script>
-      </div>
-      <script th:if="${ken != null}" type="text/x-template">
-        [(${ken.sourceForPrint})]
-      </script>
-      <script th:unless="${ken != null}" type="text/x-template">
+
+    </script>
+    <form name="ken-write-form" th:action="${ken == null ? '/ken/doWrite' : '/ken/doModify'}" method="POST"
+          onsubmit="KenWrite__submit(); return false;"
+          class="flex-grow flex flex-col">
+        <input type="hidden" name="id" th:value="${ken != null ? ken.id : 0}">
+        <input type="hidden" name="source">
+        <input type="hidden" name="result">
+        <div class="flex-grow h-0">
+            <div class="toast-ui-editor toast-ui-editor--body h-full hidden" data-toast-editor-height="100%;"
+                 data-toast-editor-placeholder="note ..">
+                <script type="text/x-template"></script>
+            </div>
+            <div class="toast-ui-viewer toast-ui-editor--bodyViewer absolute inset-0 z-10 h-full hidden bg-white p-3"
+                 data-toast-editor-height="100%;"
+                 data-toast-editor-placeholder="note ..">
+                <script type="text/x-template"></script>
+            </div>
+            <script th:if="${ken != null}" type="text/x-template">
+                [(${ken.sourceForPrint})]
+            </script>
+            <script th:unless="${ken != null}" type="text/x-template">
 $$config
 title: New Title
 keywords:
 - IT
 - ...
 $$
+
+# 여기서 부터 지워서 사용해주세요.
+- 깔끔하게 지우는 방법
+- 에디터의 7번째 줄 클릭
+- Ctrl + Shift + End
+- Delete
 
 # 위캔 단축키(윈도우/MAC)
 - 미리보기 모드 토글 : Ctrl-P / Ctrl-P
@@ -115,13 +133,139 @@ $$
 - 단어찾은 후 특정단어로 교체(일괄) : Shift-Ctrl-R / Shift-Cmd-Option-F
 - 특정줄로 이동 : Alt-G
 
-$$hide
-- `$$hide` 구문으로 감싼 부분은 주석처리 됩니다.
-- 해당 부분은 뷰어에서는 보이지 않습니다.
+# 밑줄 예시
+---
+
+# 글자 꾸미기 예시
+**Select** *some* text and ~~choose a~~ <span style="color: #ff0000">color</span> from the toolbar.
+
+# 테이블 예시
+| 칼럼1 | 칼럼2 |
+| -- | -- |
+| 내용1-1 | 내용2-1 |
+| 내용1-2 | 내용2-1 |
+
+# 테이블 병합 예시
+| 칼럼1 | 칼럼2 |
+| -- | -- |
+| @cols=2:내용1-1 |
+| 내용1-2 | 내용2-1 |
+
+# 코드 하이라이팅 예시
+```js
+const a = 10;
+```
+
+# 유튜브 예시
+$$youtube
+HUO1bI1X_dA
 $$
-      </script>
-      <textarea class="codemirror--body"></textarea>
-      <script>
+
+# UML 예시
+$$uml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+$$
+- [UML 문법](https://plantuml.com/ko/)
+
+# CODEPEN 예시
+$$codepen
+https://codepen.io/jangka44/embed/yLzybep?default-tab=html%2Cresult&editable=true
+$$
+
+# 이미지 예시
+![원본이미지](https://i.imgur.com/PAanfDK.jpg)
+
+# PPT 예시 1
+$$ppt
+title: PPT 제목을 적어주세요.
+
+# 슬라이드 1 제목
+- 내용 1
+- 내용 2
+- 내용 3
+
+# 슬라이드 2 제목
+- 내용 1
+- 내용 2
+- 내용 3
+
+# 슬라이드 3 제목
+- 내용 1
+- 내용 2
+- 내용 3
+$$
+
+# PPT 예시 2
+$$ppt
+title: PPT 제목을 적어주세요.
+
+# 슬라이드 1 제목
+$$youtube
+HUO1bI1X_dA
+$$end
+
+# 슬라이드 2 제목
+```js
+const a 20;
+```
+
+# 슬라이드 3 제목
+| 칼럼1 | 칼럼2 |
+| -- | -- |
+| 내용1-1 | 내용2-1 |
+| 내용1-2 | 내용2-1 |
+$$
+
+# PPT 예시 3
+$$ppt
+title: PPT 제목을 적어주세요.
+
+# 슬라이드 1 제목--OPTION=CLASS=h1-border-none
+- 내용 1
+- 내용 2
+- 내용 3
+
+# 슬라이드 2 제목--OPTION=CLASS=h1-top
+- 내용 1
+- 내용 2
+- 내용 3
+
+# 슬라이드 3 제목--OPTION=CLASS=h1-top h1-border-none
+- 내용 1
+- 내용 2
+- 내용 3
+
+# 슬라이드 4 제목--OPTION=CLASS=h1-border-none text-center
+
+# 슬라이드 5 제목--OPTION=CLASS=box-w-full
+
+# 슬라이드 6-1 제목--OPTION=CLASS=box-w-full box-mx-10
+
+# 슬라이드 6-2 제목--OPTION=CLASS=box-w-full box-mx-20
+
+# 슬라이드 6-3 제목--OPTION=CLASS=box-w-full box-mx-30
+
+# 슬라이드 6-4 제목--OPTION=CLASS=box-w-full box-mx-40
+
+# 슬라이드 6-5 제목--OPTION=CLASS=box-w-full box-mx-50
+
+# 슬라이드 7-1 제목--OPTION=CLASS=box-w-full box-max-w-screen-sm
+
+# 슬라이드 7-2 제목--OPTION=CLASS=box-w-full box-max-w-screen-md
+
+# 슬라이드 7-3 제목--OPTION=CLASS=box-w-full box-max-w-screen-lg
+
+# 슬라이드 7-4 제목--OPTION=CLASS=box-w-full box-max-w-screen-xl
+
+# 슬라이드 7-5 제목--OPTION=CLASS=box-w-full box-max-w-screen-2xl
+$$
+            </script>
+            <textarea class="codemirror--body"></textarea>
+            <script>
         const CodeMirrorEditor__originSource = ToastEditor__escape($('.codemirror--body').prev().html());
         var CodeMirrorEditor__editor = CodeMirror.fromTextArea($('.codemirror--body').get(0), {
           lineNumbers: true,
@@ -136,8 +280,9 @@ $$
           CodeMirrorEditor__editor.getDoc().setCursor(7);
         }, 400);
 
-      </script>
-      <style>
+
+            </script>
+            <style>
         .codemirror--body + * {
           height:100%;
         }
@@ -147,11 +292,13 @@ $$
           font-weight:bold;
         }
 
-      </style>
-    </div>
-    <div class="close-preview fixed top-0 right-0 m-3 mt-10 z-10 p-1 bg-gray-500 rounded" onclick="togglePreview();">
-      Preview On
-    </div>
-  </form>
+
+            </style>
+        </div>
+        <div class="close-preview fixed top-0 right-0 m-3 mt-10 z-10 p-1 bg-gray-500 rounded"
+             onclick="togglePreview();">
+            Preview On
+        </div>
+    </form>
 </main>
 </html>

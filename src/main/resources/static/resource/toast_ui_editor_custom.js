@@ -14,6 +14,92 @@ function getUriParams(uri) {
   return params;
 }
 
+function renderPptButton(source) {
+  const id = 'ppt-btn-' + Math.ceil(Math.random() * 10000);
+
+  source = source.replace(/\$\$end/gi, "$$$");
+
+  const indexOfFirstH1 = source.indexOf('#');
+  const title = source.substr(0, indexOfFirstH1).trim().replace('title:', '').trim();
+
+  setTimeout(() => {
+    $('#' + id).data('source', source);
+    $('#' + id).click(function() {
+      const source = $(this).data('source');
+      showPpt(source);
+    });
+  }, 100);
+
+  return `<a id="${id}">${title}</a>`;
+}
+
+function showPpt(source) {
+  $('html').addClass('ppt-popup-visible');
+  const $node = $('.ppt-popup .toast-ui-viewer');
+  const viewer = $node.data('data-toast-editor');
+  viewer.setMarkdown(source);
+  ToastEditorView__afterSetMarkdown($node);
+  setTimeout(function() {
+    ToastEditorView__afterSetMarkdownForPpt($node);
+  }, 0);
+
+  $('.ppt-popup').removeClass('hidden');
+
+  showPptCloseBtnTemp();
+}
+
+function showPptCloseBtnTemp() {
+  $('.ppt-popup .btn-popup, .ppt-popup .page').removeClass('hide');
+
+  setTimeout(function() {
+    $('.ppt-popup .btn-popup, .ppt-popup .page').addClass('hide');
+  }, 100);
+}
+
+function hidePpt() {
+  $('html').removeClass('ppt-popup-visible');
+  const $node = $('.ppt-popup .toast-ui-viewer');
+  const viewer = $node.data('data-toast-editor');
+  viewer.setMarkdown('');
+  const $contents = $node.find('.toastui-editor-contents');
+  $contents.empty();
+  $('.ppt-popup').addClass('hidden');
+}
+
+$(document).keydown(function(event) {
+  if ( event.keyCode == 27 || event.which == 27 ) {
+    hidePpt();
+  }
+});
+
+$(function() {
+  $('.ppt-popup .btn-popup').click(hidePpt);
+
+  $('.ppt-popup').mousemove(function() {
+    showPptCloseBtnTemp();
+  });
+
+  $('.ppt-popup').click(function() {
+      showPptCloseBtnTemp();
+    });
+})
+
+function pptPlugin() {
+  const toHTMLRenderers = {
+    ppt(node) {
+      const html = renderPptButton(node.literal);
+
+      return [
+        { type: "openTag", tagName: "div", outerNewLine: true },
+        { type: "html", content: html },
+        { type: "closeTag", tagName: "div", outerNewLine: true },
+      ];
+    },
+  };
+
+  return { toHTMLRenderers };
+}
+
 function codepenPlugin() {
   const toHTMLRenderers = {
     codepen(node) {
@@ -22,9 +108,9 @@ function codepenPlugin() {
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: html },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   function renderCodepen(uri) {
@@ -79,9 +165,9 @@ function replPlugin() {
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: html },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   function renderRepl(uri) {
@@ -113,9 +199,9 @@ function youtubePlugin() {
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: html },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   function renderYoutube(uri) {
@@ -195,15 +281,15 @@ function katexPlugin() {
   const toHTMLRenderers = {
     katex(node) {
       let html = katex.renderToString(node.literal, {
-        throwOnError: false
+        throwOnError: false,
       });
 
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: html },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   return { toHTMLRenderers };
@@ -213,7 +299,7 @@ const ToastEditor__chartOptions = {
   minWidth: 100,
   maxWidth: 600,
   minHeight: 100,
-  maxHeight: 300
+  maxHeight: 300,
 };
 
 // config 플러그인
@@ -223,9 +309,9 @@ function configPlugin() {
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: "" },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   return { toHTMLRenderers };
@@ -237,16 +323,18 @@ function hidePlugin() {
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
         { type: "html", content: "" },
-        { type: "closeTag", tagName: "div", outerNewLine: true }
+        { type: "closeTag", tagName: "div", outerNewLine: true },
       ];
-    }
+    },
   };
 
   return { toHTMLRenderers };
 }
 
 function ToastEditor__escape(origin) {
-    return origin.replaceAll('<t-script', "<script").replaceAll('</t-script', "</script");
+  return origin
+    .replaceAll("<t-script", "<script")
+    .replaceAll("</t-script", "</script");
 }
 
 function ToastEditor__init() {
@@ -254,14 +342,16 @@ function ToastEditor__init() {
     const $node = $(node);
     const $initialValueEl = $node.find(" > script");
     const initialValue =
-      $initialValueEl.length == 0 ? "" : ToastEditor__escape($initialValueEl.html().trim());
+      $initialValueEl.length == 0
+        ? ""
+        : ToastEditor__escape($initialValueEl.html().trim());
 
     const editor = new toastui.Editor({
       el: node,
       previewStyle: "vertical",
       initialValue: initialValue,
       height: "100%",
-      placeholder: 'Please enter text.',
+      placeholder: "Please enter text.",
       theme: toastUiThemeName,
       plugins: [
         [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
@@ -272,9 +362,10 @@ function ToastEditor__init() {
         katexPlugin,
         youtubePlugin,
         codepenPlugin,
+        pptPlugin,
         replPlugin,
         configPlugin,
-        hidePlugin
+        hidePlugin,
       ],
       customHTMLSanitizer: (html) => {
         return (
@@ -290,11 +381,11 @@ function ToastEditor__init() {
               "style",
               "title",
               "loading",
-              "allowtransparency"
-            ]
+              "allowtransparency",
+            ],
           }) || ""
         );
-      }
+      },
     });
 
     $node.data("data-toast-editor", editor);
@@ -306,10 +397,12 @@ function ToastEditorView__init() {
     const $node = $(node);
     const $initialValueEl = $node.find(" > script");
     const initialValue =
-      $initialValueEl.length == 0 ? "" : ToastEditor__escape($initialValueEl.html().trim());
+      $initialValueEl.length == 0
+        ? ""
+        : ToastEditor__escape($initialValueEl.html().trim());
     $node.empty();
 
-    let viewer = new toastui.Editor.factory({
+    const viewer = new toastui.Editor.factory({
       el: node,
       initialValue: initialValue,
       viewer: true,
@@ -322,9 +415,10 @@ function ToastEditorView__init() {
         katexPlugin,
         youtubePlugin,
         codepenPlugin,
+        pptPlugin,
         replPlugin,
         configPlugin,
-        hidePlugin
+        hidePlugin,
       ],
       customHTMLSanitizer: (html) => {
         return (
@@ -340,25 +434,100 @@ function ToastEditorView__init() {
               "style",
               "title",
               "loading",
-              "allowtransparency"
-            ]
+              "allowtransparency",
+            ],
           }) || ""
         );
-      }
+      },
     });
 
     $node.data("data-toast-editor", viewer);
 
-    $node.find('a').attr('target', '_blank');
+    ToastEditorView__afterSetMarkdown($node);
+  });
+}
 
-    $node.find('h1,h2,h3').each(function(index, node) {
-      const $node = $(node);
+function ToastEditorView__afterSetMarkdownForPpt($node) {
+  const text = $node.text();
+  const $pages = [];
+  const optionsMaps = [];
 
-      const hash = strToHtmlHash($node.text());
+  $node.find('h1').each(function(index, node) {
+    const $h1 = $(node);
 
-      $node.attr('id', hash);
-      $node.css('scroll-margin-top', '10px');
-    })
+    const $page = [];
+
+    let $next = $h1;
+
+    while ( true ) {
+      if ( $next.prop('tagName') == 'H1' ) {
+        const h1Texts = $next.text().split('--OPTION=');
+        const optionsMap = {};
+        optionsMap['CLASS'] = '';
+
+        if ( h1Texts.length == 2 ) {
+          $next.text(h1Texts[0]);
+          const options = h1Texts[1].split(',');
+
+          options.forEach((optionStr) => {
+            const optionStrBits = optionStr.split('=');
+            const key = optionStrBits[0];
+            const value = optionStrBits.length == 2 ? optionStrBits[1] : 'DEFAULT';
+
+            optionsMap[key] = value;
+          });
+        }
+
+        optionsMaps.push(optionsMap);
+      }
+
+      $page.push($next);
+
+      $next = $next.next();
+
+      if ( $next.prop('tagName') == 'H1' || $next.length == 0 ) {
+        break;
+      }
+    }
+
+    $pages.push($page);
+  });
+
+  const $contents = $node.find('.toastui-editor-contents');
+  $contents.empty();
+
+  const pagesTotal = $pages.length;
+
+  $pages.forEach(($page, index) => {
+    const $div = $('<div />');
+
+    $page.forEach(($pageItem) => {
+      $div.append($pageItem);
+    });
+
+    const currentPage = index + 1;
+
+    $div.append(`<div class="page">${currentPage} / ${pagesTotal}</div>`);
+
+    const $wrap = $('<div />');
+    $wrap.append($div);
+
+    $wrap.addClass(optionsMaps[index].CLASS);
+
+    $contents.append($wrap);
+  })
+}
+
+function ToastEditorView__afterSetMarkdown($node) {
+  $node.find("a").attr("target", "_blank");
+
+  $node.find("h1,h2,h3").each(function (index, node) {
+    const $node = $(node);
+
+    const hash = strToHtmlHash($node.text());
+
+    $node.attr("id", hash);
+    $node.css("scroll-margin-top", "10px");
   });
 }
 
@@ -367,11 +536,11 @@ let tryToGoHashEl__callCount = 0;
 function tryToGoHashEl() {
   tryToGoHashEl__callCount++;
 
-  if ( tryToGoHashEl__callCount == 10 ) {
+  if (tryToGoHashEl__callCount == 10) {
     return;
   }
 
-  if ( urlHash && urlHashEl == null ) {
+  if (urlHash && urlHashEl == null) {
     urlHashEl = document.getElementById(urlHash);
     setTimeout(() => urlHashEl.scrollIntoView(), 500);
   }

@@ -2,22 +2,30 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{usr/common/layout}">
 <head>
-  <title>Ken [[${ken.id}]]</title>
+    <title>Ken [[${ken.id}]]</title>
 </head>
 
 <main layout:fragment="main">
-  <div class="container min-h-full mx-auto px-[8px] py-10">
-    <h1 class="font-bold text-4xl">[[${ken.title}]]</h1>
-    <h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
-    <div class="toast-ui-viewer mt-4">
-      <script type="text/x-template">
-        [(${ken.sourceForPrint})]
-      </script>
+    <div class="ppt-popup fixed hidden">
+        <div class="btn-popup"></div>
+        <div class="toast-ui-viewer h-full toast-ui-viewer--ppt"
+             data-toast-editor-height="100%;"
+             data-toast-editor-placeholder="note ..">
+            <script type="text/x-template"></script>
+        </div>
     </div>
-  </div>
+    <div class="container min-h-full mx-auto px-[8px] py-10">
+        <h1 class="font-bold text-4xl">[[${ken.title}]]</h1>
+        <h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
+        <div class="toast-ui-viewer mt-4">
+            <script type="text/x-template">
+                [(${ken.sourceForPrint})]
+            </script>
+        </div>
+    </div>
 
-  <div id="KenReplyApp" class="hidden"></div>
-  <script th:src="${@rq.getBundleJsResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
+    <div id="KenReplyApp" class="hidden"></div>
+    <script th:src="${@rq.getBundleJsResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
 
 </main>
 </html>
