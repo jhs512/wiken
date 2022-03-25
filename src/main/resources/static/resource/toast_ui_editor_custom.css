@@ -56,6 +56,8 @@ html.ppt-popup-visible > body {
 .toast-ui-viewer--ppt .toastui-editor-contents > div {
   scroll-snap-align: start;
   min-height:100vh;
+  padding-top:20px;
+  padding-bottom:20px;
   display:flex;
   align-items:center;
   justify-content:center;
