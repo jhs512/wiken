@@ -52,6 +52,10 @@
     }
 
     keyboardJS.bind('ctrl + p', togglePreview);
+    keyboardJS.bind('ctrl + s', function(e) {
+      e.preventDefault();
+      KenWrite__submit();
+    });
 
     let KenWrite__submitDone = false;
     function KenWrite__submit() {
@@ -64,8 +68,8 @@
       const bodyEditorViewer = $(form).find('.toast-ui-editor--bodyViewer').data('data-toast-editor');
 
       const source = CodeMirrorEditor__editor.getValue();
-      bodyEditor.setMarkdown(source);
-      const result = bodyEditor.getHTML().trim();
+      //bodyEditor.setMarkdown(source);
+      //const result = bodyEditor.getHTML().trim();
 
       if ( source.length == 0 ) {
         CodeMirrorEditor__editor.focus();
@@ -73,18 +77,51 @@
         return;
       }
 
+      form.source.value = source;
+      //form.result.value = result;
+
+      let isChanged = CodeMirrorEditor__originSource2.trim() != CodeMirrorEditor__editor.getValue().trim();
+
+      if ( isChanged == false ) {
+        return;
+      }
+
       KenWrite__submitDone = true;
 
-      form.source.value = source;
-      form.result.value = result;
+      var queryString = $(form).serialize() ;
 
-      $(window).unbind('beforeunload');
+      $.ajax({
+        type : 'post',
+        url : form.action,
+        data : queryString,
+        dataType : 'json',
+        error: function(xhr, status, error) {
+          alert(error);
+        },
+        success : function(json) {
+          if ( json.fail ) {
+            alert(json.msg);
+            return;
+          }
 
-      form.submit();
+          CodeMirrorEditor__originSource2 = source;
+
+          if ( json.data ) {
+            $(window).unbind('beforeunload');
+            location.replace(json.data);
+          }
+          else {
+            toastNotice(json.msg);
+            KenWrite__submitDone = false;
+          }
+        }
+      });
+
+      //form.submit();
     }
 
     $(window).bind('beforeunload', function() {
-      let isChanged = CodeMirrorEditor__originSource2 != CodeMirrorEditor__editor.getValue();
+      let isChanged = CodeMirrorEditor__originSource2.trim() != CodeMirrorEditor__editor.getValue().trim();
 
       if ( isChanged ) return '변경된 사항이 있습니다. 페이지에서 나가시겠습니까?';
     });
@@ -133,6 +170,22 @@ $$
 - 단어찾은 후 특정단어로 교체(일괄) : Shift-Ctrl-R / Shift-Cmd-Option-F
 - 특정줄로 이동 : Alt-G
 
+# 차트 예시
+$$chart
+,20대,30대
+2020년,200,210
+2022년,300,310
+
+type: column
+title: 한국 직장인 월소득 평균
+x.title: 연도
+y.title: 금액
+y.min: 100
+y.max: 2000
+$$
+
+
+
 # 밑줄 예시
 ---
 
@@ -143,13 +196,25 @@ $$
 | 칼럼1 | 칼럼2 |
 | -- | -- |
 | 내용1-1 | 내용2-1 |
-| 내용1-2 | 내용2-1 |
+| 내용2-1 | 내용2-2 |
 
-# 테이블 병합 예시
+# 테이블 가로셀병합 예시
+| 칼럼1 | 칼럼2 | 칼럼3 |
+| -- | -- | -- |
+| @cols=2: 내용1-1와 1-2 병합 | 내용1-3 |
+| 내용2-1 | 내용2-1 | 내용2-3 |
+
+# 테이블 세로셀병합 예시
 | 칼럼1 | 칼럼2 |
 | -- | -- |
-| @cols=2:내용1-1 |
-| 내용1-2 | 내용2-1 |
+| @rows=2: 내용1-1와 2-1 병합 | 내용1-2 |
+| 내용2-1 |
+
+# 테이블 가로세로셀병합 예시
+| 칼럼1 | 칼럼2 | 칼럼3 |
+| -- | -- | -- |
+| @cols=2:@rows=2:내용1-1 | 내용1-3 |
+| 내용2-3 |
 
 # 코드 하이라이팅 예시
 ```js
@@ -163,11 +228,11 @@ $$
 
 # UML 예시
 $$uml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+영희 -> 철수: Authentication Request
+철수--> 영희: Authentication Response
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+영희 -> 철수: Another authentication Request
+영희 <-- 철수: another authentication Response
 $$
 - [UML 문법](https://plantuml.com/ko/)
 
@@ -266,33 +331,30 @@ $$
             </script>
             <textarea class="codemirror--body"></textarea>
             <script>
-        const CodeMirrorEditor__originSource = ToastEditor__escape($('.codemirror--body').prev().html());
-        var CodeMirrorEditor__editor = CodeMirror.fromTextArea($('.codemirror--body').get(0), {
-          lineNumbers: true,
-          styleActiveLine: true,
-        });
+                const CodeMirrorEditor__originSource = ToastEditor__escape($('.codemirror--body').prev().html());
+                var CodeMirrorEditor__editor = CodeMirror.fromTextArea($('.codemirror--body').get(0), {
+                  lineNumbers: true,
+                  styleActiveLine: true,
+                });
 
-        const CodeMirrorEditor__originSource2 = ToastEditor__escape(CodeMirrorEditor__originSource.trim());
+                let CodeMirrorEditor__originSource2 = ToastEditor__escape(CodeMirrorEditor__originSource.trim());
 
-        CodeMirrorEditor__editor.setValue(CodeMirrorEditor__originSource2);
-        setTimeout(() => {
-          // 이걸 하는 이유는, cm 의 오류인 첫 렌더링시 부분적으로 하단이 짤리는 버그를 수정하기 위해서
-          CodeMirrorEditor__editor.getDoc().setCursor(7);
-        }, 400);
-
-
+                CodeMirrorEditor__editor.setValue(CodeMirrorEditor__originSource2);
+                CodeMirrorEditor__editor.getDoc().clearHistory()
+                setTimeout(() => {
+                  // 이걸 하는 이유는, cm 의 오류인 첫 렌더링시 부분적으로 하단이 짤리는 버그를 수정하기 위해서
+                  CodeMirrorEditor__editor.getDoc().setCursor(7);
+                }, 400);
             </script>
             <style>
-        .codemirror--body + * {
-          height:100%;
-        }
+                .codemirror--body + * {
+                  height:100%;
+                }
 
-        .codemirror--body + *  .CodeMirror-linenumber.CodeMirror-gutter-elt {
-          font-family: monospace;
-          font-weight:bold;
-        }
-
-
+                .codemirror--body + *  .CodeMirror-linenumber.CodeMirror-gutter-elt {
+                  font-family: monospace;
+                  font-weight:bold;
+                }
             </style>
         </div>
         <div class="close-preview fixed top-0 right-0 m-3 mt-10 z-10 p-1 bg-gray-500 rounded"

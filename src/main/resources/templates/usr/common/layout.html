@@ -117,14 +117,14 @@
     const params = /*[[ ${param} ]]*/ null;
     
     if (params.toastMsg) {
-    	const toastMsgJsUnixTimestamp = parseInt(params.toastMsgJsUnixTimestamp);
-    	const currentJsUnixTimestamp = new Date().getTime();
+      const toastMsgJsUnixTimestamp = parseInt(params.toastMsgJsUnixTimestamp);
+      const currentJsUnixTimestamp = new Date().getTime();
     	
-    	if ( toastMsgJsUnixTimestamp + 5000 > currentJsUnixTimestamp ) {
-    	  setTimeout(function() {
-        	toastNotice(params.toastMsg);
+      if ( toastMsgJsUnixTimestamp + 5000 > currentJsUnixTimestamp ) {
+        setTimeout(function() {
+          toastNotice(params.toastMsg);
         }, 500);
-    	}
+      }
     }
 
   </script>

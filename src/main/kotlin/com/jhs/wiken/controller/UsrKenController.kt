@@ -3,6 +3,7 @@ package com.jhs.wiken.controller
 import com.jhs.wiken.service.KenService
 import com.jhs.wiken.service.MemberService
 import com.jhs.wiken.vo.KenSourceInterpreter
+import com.jhs.wiken.vo.ResultData
 import com.jhs.wiken.vo.Rq
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Controller
@@ -39,7 +40,7 @@ class UsrKenController(
     // ken 작성 처리
     @RequestMapping("/ken/doWrite")
     @ResponseBody
-    fun doWrite(source: String, result: String): String {
+    fun doWrite(source: String, result: String): ResultData<String> {
         // 캔 소스 해석기 생성
         val kenSourceInterpreter = KenSourceInterpreter.from(source)
         // 해석기에서 제목 가져옴
@@ -48,19 +49,19 @@ class UsrKenController(
         val resultData = kenService.write(rq.loginedMemberId, title, source, result)
         val id = resultData.data
 
-        return rq.replaceJs("", "../ken/${id}/edit")
+        return ResultData.from("S-1", "성공적으로 저장되었습니다.", "redirectUrl", "../ken/${id}/edit")
     }
 
     // ken 편집 처리
     @RequestMapping("/ken/doModify")
     @ResponseBody
-    fun doModify(id: Int, source: String, result: String): String {
-        val ken = kenService.getKen(id) ?: return rq.historyBackJs("존재하지 않는 ken 입니다.")
+    fun doModify(id: Int, source: String, result: String): ResultData<String> {
+        val ken = kenService.getKen(id) ?: return ResultData.from("F-1", "존재하지 않는 문서입니다.")
 
         val actorCanModifyRd = memberService.actorCanModify(rq.loginedMember, ken)
 
         if (actorCanModifyRd.isFail) {
-            return rq.historyBackJs(actorCanModifyRd.msg)
+            return ResultData.from("F-2", actorCanModifyRd.msg)
         }
 
         // 입력받은 소스를 새 소스로 설정한다.
@@ -84,7 +85,7 @@ class UsrKenController(
 
         kenService.modify(id, title, newSource, result)
 
-        return rq.replaceJs("", "../ken/${id}/edit")
+        return ResultData.from("S-1", "성공적으로 저장되었습니다.")
     }
 
     // 완벽

@@ -408,6 +408,7 @@ function ToastEditorView__init() {
       viewer: true,
       theme: toastUiThemeName,
       plugins: [
+        [toastui.Editor.plugin.chart, ToastEditor__chartOptions],
         [toastui.Editor.plugin.codeSyntaxHighlight, { highlighter: Prism }],
         toastui.Editor.plugin.colorSyntax,
         toastui.Editor.plugin.tableMergedCell,
