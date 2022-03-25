@@ -462,12 +462,13 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
     while ( true ) {
       if ( $next.prop('tagName') == 'H1' ) {
-        const h1Texts = $next.text().split('--OPTION=');
+        const text = $next.text().replace(/\[br \/\]/gi, '<br />');
+        const h1Texts = text.split('--o--');
         const optionsMap = {};
         optionsMap['CLASS'] = '';
 
         if ( h1Texts.length == 2 ) {
-          $next.text(h1Texts[0]);
+          $next.html(h1Texts[0]);
           const options = h1Texts[1].split(',');
 
           options.forEach((optionStr) => {
@@ -477,6 +478,13 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
             optionsMap[key] = value;
           });
+
+          if ( optionsMap.t && optionsMap.t == '1' ) {
+            optionsMap['CLASS'] = 'h1-border-none text-center';
+          }
+        }
+        else {
+          $next.html(text);
         }
 
         optionsMaps.push(optionsMap);

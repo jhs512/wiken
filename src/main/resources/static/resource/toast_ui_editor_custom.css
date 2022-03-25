@@ -178,5 +178,6 @@ html.ppt-popup-visible > body {
   font-size:28px;
   border-bottom-style:solid;
   border-bottom-width:1px;
+  line-height:1.5;
 }
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */
