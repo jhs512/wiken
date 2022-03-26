@@ -480,14 +480,15 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
           });
 
           if ( optionsMap.t && optionsMap.t == '1' ) {
-            optionsMap['CLASS'] = 'h1-border-none text-center box-mx-20';
-          }
-          else if ( optionsMap.t && optionsMap.t == '2' ) {
-            optionsMap['CLASS'] = 'box-mx-20';
+            optionsMap['CLASS'] = 'h1-border-none text-center';
           }
         }
         else {
           $next.html(text);
+        }
+
+        if ( optionsMap['CLASS'].indexOf('box-mx-') == -1 ) {
+          optionsMap['CLASS'] += ' box-mx-20';
         }
 
         optionsMaps.push(optionsMap);

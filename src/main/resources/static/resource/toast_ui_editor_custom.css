@@ -149,7 +149,7 @@ html.ppt-popup-visible > body {
 
 .ppt-popup .page {
   position:absolute;
-  bottom:50px;
+  bottom:0;
   right:0;
   margin:10px;
   pointer-event:none;
