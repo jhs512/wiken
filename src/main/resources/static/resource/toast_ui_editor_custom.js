@@ -480,7 +480,10 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
           });
 
           if ( optionsMap.t && optionsMap.t == '1' ) {
-            optionsMap['CLASS'] = 'h1-border-none text-center box-mx-30';
+            optionsMap['CLASS'] = 'h1-border-none text-center box-mx-20';
+          }
+          else if ( optionsMap.t && optionsMap.t == '2' ) {
+            optionsMap['CLASS'] = 'box-mx-20';
           }
         }
         else {
