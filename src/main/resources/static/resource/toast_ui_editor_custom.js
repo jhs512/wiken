@@ -462,7 +462,7 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
     while ( true ) {
       if ( $next.prop('tagName') == 'H1' ) {
-        const text = $next.text().replace(/\[br \/\]/gi, '<br />');
+        const text = $next.text().replace(/\[br \/\]/gi, '<br class="sm:block" />');
         const h1Texts = text.split('--o--');
         const optionsMap = {};
         optionsMap['CLASS'] = '';
