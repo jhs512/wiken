@@ -3,7 +3,7 @@ server:
     session:
       timeout: 43200m      # 60m * 24h * 30d
       cookie:
-        max-age: 43200m    # 60m * 24h * 30d
+        max-age: 300m    # 5시간
         name: SID
         http-only: true
         secure: true
