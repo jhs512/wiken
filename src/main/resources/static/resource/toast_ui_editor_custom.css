@@ -48,16 +48,14 @@ html.ppt-popup-visible > body {
 }
 
 .toast-ui-viewer--ppt .toastui-editor-contents {
-  height:100vh;
-  height:-webkit-fill-available;
+  height:100%;
   overflow: auto;
   scroll-snap-type: y mandatory;
 }
 
 .toast-ui-viewer--ppt .toastui-editor-contents > div {
   scroll-snap-align: start;
-  min-height:100vh;
-  min-height:-webkit-fill-available;
+  min-height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
