@@ -562,6 +562,7 @@ function tryToGoHashEl() {
 
       if ( urlHash.startsWith("open-") ) {
         $(urlHashEl).click();
+        $(urlHashEl).css('color', 'red');
       }
     }, 500);
   }
