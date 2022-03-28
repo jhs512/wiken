@@ -558,11 +558,11 @@ function tryToGoHashEl() {
   if (urlHash && urlHashEl == null) {
     urlHashEl = document.getElementById(urlHash);
     setTimeout(() => {
-      urlHashEl.scrollIntoView()
+      urlHashEl.scrollIntoView();
+      $(urlHashEl).css('color', 'red');
 
       if ( urlHash.startsWith("open-") ) {
         $(urlHashEl).click();
-        $(urlHashEl).css('color', 'red');
       }
     }, 500);
   }
