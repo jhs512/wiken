@@ -22,15 +22,17 @@ function renderPptButton(source) {
   const indexOfFirstH1 = source.indexOf('#');
   const title = source.substr(0, indexOfFirstH1).trim().replace('title:', '').trim();
 
+  const aId = 'open-' + strToHtmlHash(title);
+
   setTimeout(() => {
-    $('#' + id).data('source', source);
-    $('#' + id).click(function() {
+    $('#' + id).parent().data('source', source);
+    $('#' + id).parent().click(function() {
       const source = $(this).data('source');
       showPpt(source);
     });
   }, 100);
 
-  return `<a id="${id}">${title}</a>`;
+  return `<a id="${aId}" style="cursor:pointer; scroll-margin-top:10px; margin-bottom:10px; display:inline-block;"><span id="${id}">${title}</span></a>`;
 }
 
 function showPpt(source) {
@@ -555,7 +557,13 @@ function tryToGoHashEl() {
 
   if (urlHash && urlHashEl == null) {
     urlHashEl = document.getElementById(urlHash);
-    setTimeout(() => urlHashEl.scrollIntoView(), 500);
+    setTimeout(() => {
+      urlHashEl.scrollIntoView()
+
+      if ( urlHash.startsWith("open-") ) {
+        $(urlHashEl).click();
+      }
+    }, 500);
   }
 }
 
