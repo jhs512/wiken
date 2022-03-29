@@ -456,7 +456,14 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
   const optionsMaps = [];
 
   $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
-    $(node).width($(node).width() * 1.4);
+    if ( $(node).width() ) {
+      $node.width($(node).width() * 1.5);
+    }
+    else {
+      $(node).on('load', function() {
+        $node.width($(node).width() * 1.5);
+      });
+    }
   });
 
   $node.find('h1').each(function(index, node) {
@@ -549,11 +556,16 @@ function ToastEditorView__afterSetMarkdown($node) {
     $node.css("scroll-margin-top", "10px");
   });
 
-  setTimeout(function() {
-    $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
-      $(node).width($(node).width() * 1.5);
-    });
-  }, 500);
+  $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
+    if ( $(node).width() ) {
+      $node.width($(node).width() * 1.5);
+    }
+    else {
+      $(node).on('load', function() {
+        $node.width($(node).width() * 1.5);
+      });
+    }
+  });
 }
 
 let tryToGoHashEl__callCount = 0;
