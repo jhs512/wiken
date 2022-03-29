@@ -11,22 +11,23 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+/* 스크롤바 꾸미기 시작 */
+:root {
+  overflow-y:overlay;
 }
 
-::-webkit-scrollbar
-{
-	width: 6px;
-	height: 6px;
-	background-color: #F5F5F5;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(45,45,45,0.2);
+  border-radius: 0;
 }
 
-::-webkit-scrollbar-thumb
-{
-	background-color: #989898;
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+
+html > body .CodeMirror-scroll {
+  overflow:overlay !important;
 }
 
 html > body,

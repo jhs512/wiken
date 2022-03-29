@@ -360,7 +360,7 @@ function ToastEditor__init() {
         [toastui.Editor.plugin.codeSyntaxHighlight, { highlighter: Prism }],
         toastui.Editor.plugin.colorSyntax,
         toastui.Editor.plugin.tableMergedCell,
-        toastui.Editor.plugin.uml,
+        [toastui.Editor.plugin.uml, { rendererURL: 'http://www.plantuml.com/plantuml/svg/' }],
         katexPlugin,
         youtubePlugin,
         codepenPlugin,
@@ -414,7 +414,7 @@ function ToastEditorView__init() {
         [toastui.Editor.plugin.codeSyntaxHighlight, { highlighter: Prism }],
         toastui.Editor.plugin.colorSyntax,
         toastui.Editor.plugin.tableMergedCell,
-        toastui.Editor.plugin.uml,
+        [toastui.Editor.plugin.uml, { rendererURL: 'http://www.plantuml.com/plantuml/svg/' }],
         katexPlugin,
         youtubePlugin,
         codepenPlugin,
@@ -454,6 +454,10 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
   const text = $node.text();
   const $pages = [];
   const optionsMaps = [];
+
+  $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
+    $(node).width($(node).width() * 1.4);
+  });
 
   $node.find('h1').each(function(index, node) {
     const $h1 = $(node);
@@ -544,6 +548,12 @@ function ToastEditorView__afterSetMarkdown($node) {
     $node.attr("id", hash);
     $node.css("scroll-margin-top", "10px");
   });
+
+  setTimeout(function() {
+    $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
+      $(node).width($(node).width() * 1.5);
+    });
+  }, 500);
 }
 
 let tryToGoHashEl__callCount = 0;

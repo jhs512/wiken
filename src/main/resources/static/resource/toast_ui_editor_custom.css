@@ -49,7 +49,7 @@ html.ppt-popup-visible > body {
 
 .toast-ui-viewer--ppt .toastui-editor-contents {
   height:100%;
-  overflow: auto;
+  overflow: overlay;
   scroll-snap-type: y mandatory;
 }
 
@@ -145,6 +145,11 @@ html.ppt-popup-visible > body {
   transition: opacity 1s 1s;
 }
 
+.toast-ui-viewer--ppt .toastui-editor-contents::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
 .ppt-popup .page {
   position:absolute;
   bottom:0;
@@ -179,5 +184,11 @@ html.ppt-popup-visible > body {
   border-bottom-style:solid;
   border-bottom-width:1px;
   line-height:1.5;
+}
+
+@media ( min-width:1200px ) {
+  .ppt-popup h1 {
+    font-size:42px;
+  }
 }
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */
