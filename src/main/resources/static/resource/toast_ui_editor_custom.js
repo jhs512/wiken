@@ -456,12 +456,13 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
   const optionsMaps = [];
 
   $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
-    if ( $(node).width() ) {
-      $node.width($(node).width() * 1.5);
+    const $node = $(node);
+    if ( $node.width() ) {
+      $node.width($node.width() * 1.5);
     }
     else {
-      $(node).on('load', function() {
-        $node.width($(node).width() * 1.5);
+      $node.on('load', function() {
+        $node.width($node.width() * 1.5);
       });
     }
   });
@@ -557,12 +558,13 @@ function ToastEditorView__afterSetMarkdown($node) {
   });
 
   $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
-    if ( $(node).width() ) {
-      $node.width($(node).width() * 1.5);
+    const $node = $(node);
+    if ( $node.width() ) {
+      $node.width($node.width() * 1.5);
     }
     else {
-      $(node).on('load', function() {
-        $node.width($(node).width() * 1.5);
+      $node.on('load', function() {
+        $node.width($node.width() * 1.5);
       });
     }
   });
