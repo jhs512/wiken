@@ -51,6 +51,7 @@ html.ppt-popup-visible > body {
   height:100%;
   overflow: overlay;
   scroll-snap-type: y mandatory;
+  position:relative;
 }
 
 .toast-ui-viewer--ppt .toastui-editor-contents > div {
@@ -187,6 +188,10 @@ html.ppt-popup-visible > body {
 }
 
 @media ( min-width:1200px ) {
+  .ppt-popup, .ppt-popup a {
+    font-size: 1.5rem;
+  }
+
   .ppt-popup h1 {
     font-size:42px;
   }

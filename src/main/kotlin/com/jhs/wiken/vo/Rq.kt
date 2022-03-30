@@ -325,7 +325,7 @@ class Rq(
       return "$uri?version=$deploymentVersion"
     }
 
-    return "http://127.0.0.1:7999/static${uri}"
+    return "http://10.78.101.241:7999/static${uri}"
   }
 
   // 번들파일서비스 전용함수

@@ -35,14 +35,26 @@ function renderPptButton(source) {
   return `<a id="${aId}" style="cursor:pointer; scroll-margin-top:10px; margin-bottom:10px; display:inline-block;"><span id="${id}">${title}</span></a>`;
 }
 
+let pptVisible = false;
+let pptIndex;
+let pptSlides;
+
 function showPpt(source) {
+  pptVisible = true;
   $('html').addClass('ppt-popup-visible');
   const $node = $('.ppt-popup .toast-ui-viewer');
   const viewer = $node.data('data-toast-editor');
+
+  pptIndex = 0;
+
   viewer.setMarkdown(source);
   ToastEditorView__afterSetMarkdown($node);
+
+  pptSlides = $node.find('h1').length;
+
   setTimeout(function() {
     ToastEditorView__afterSetMarkdownForPpt($node);
+    $node.find(' > div').scrollTop(0);
   }, 0);
 
   $('.ppt-popup').removeClass('hidden');
@@ -59,6 +71,7 @@ function showPptCloseBtnTemp() {
 }
 
 function hidePpt() {
+  pptVisible = false;
   $('html').removeClass('ppt-popup-visible');
   const $node = $('.ppt-popup .toast-ui-viewer');
   const viewer = $node.data('data-toast-editor');
@@ -71,6 +84,25 @@ function hidePpt() {
 $(document).keydown(function(event) {
   if ( event.keyCode == 27 || event.which == 27 ) {
     hidePpt();
+  }
+
+  if ( pptVisible ) {
+    if ( event.keyCode == 33 || event.which == 33 ) {
+      pptIndex = pptIndex == 0 ? 0 : pptIndex - 1;
+      console.log(pptIndex);
+      event.preventDefault();
+      const $node = $('.ppt-popup .toast-ui-viewer');
+      //$node.find(' > div').scrollTop($node.find(' > div > div').eq(pptIndex).position().top);
+      $node.find(' > div > div').eq(pptIndex).get(0).scrollIntoView();
+    }
+    else if ( event.keyCode == 34 || event.which == 34 ) {
+      pptIndex = pptIndex + 1 == pptSlides ? pptIndex : pptIndex + 1;
+      console.log(pptIndex);
+      event.preventDefault();
+      const $node = $('.ppt-popup .toast-ui-viewer');
+      //$node.find(' > div').scrollTop($node.find(' > div > div').eq(pptIndex).position().top);
+      $node.find(' > div > div').eq(pptIndex).get(0).scrollIntoView();
+    }
   }
 });
 
@@ -457,14 +489,10 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
   $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
     const $node = $(node);
-    if ( $node.width() ) {
-      $node.width($node.width() * 1.5);
-    }
-    else {
-      $node.on('load', function() {
-        $node.width($node.width() * 1.5);
-      });
-    }
+
+    setTimeout(function() {
+      $node.width($node.width() * 1.6);
+    }, 1500);
   });
 
   $node.find('h1').each(function(index, node) {
