@@ -138,7 +138,7 @@ html.ppt-popup-visible > body {
   width:50px;
   height:50px;
   cursor:pointer;
-  z-index:10;
+  z-index:10000;
 }
 
 .ppt-popup .btn-popup.hide {
@@ -192,8 +192,28 @@ html.ppt-popup-visible > body {
     font-size: 1.5rem;
   }
 
+  html .ppt-popup .toastui-editor-contents, html .ProseMirror {
+    font-size: 23px;
+  }
+
   .ppt-popup h1 {
     font-size:42px;
+    line-height:44px;
+  }
+
+  .ppt-popup h2 {
+    font-size:30px;
+    line-height:32px;
+  }
+
+  .ppt-popup h3 {
+    font-size:27px;
+    line-height:29px;
+  }
+
+  .ppt-popup h4 {
+    font-size:24px;
+    line-height:26px;
   }
 }
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */

@@ -490,9 +490,28 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
   $node.find('img[src^="http://www.plantuml.com/plantuml/svg/"]').each(function(index, node) {
     const $node = $(node);
 
+    let zoomDone = false;
+
     setTimeout(function() {
-      $node.width($node.width() * 1.6);
-    }, 1500);
+      if ( zoomDone == false && $node.width() ) {
+        $node.width($node.width() * 1.6);
+        zoomDone = true;
+      }
+    }, 1000);
+
+    setTimeout(function() {
+      if ( zoomDone == false && $node.width() ) {
+        $node.width($node.width() * 1.6);
+        zoomDone = true;
+      }
+    }, 2000);
+
+    setTimeout(function() {
+      if ( zoomDone == false && $node.width() ) {
+        $node.width($node.width() * 1.6);
+        zoomDone = true;
+      }
+    }, 5000);
   });
 
   $node.find('h1').each(function(index, node) {
