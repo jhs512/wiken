@@ -30,6 +30,11 @@ html > body .CodeMirror-scroll {
   overflow:overlay !important;
 }
 
+html > body {
+  max-width:1920px;
+  margin:0 auto;
+}
+
 html > body,
 html > body .toastui-editor-contents,
 html > body .ProseMirror,
