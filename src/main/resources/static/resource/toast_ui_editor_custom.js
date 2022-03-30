@@ -494,21 +494,21 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
     setTimeout(function() {
       if ( zoomDone == false && $node.width() ) {
-        $node.width($node.width() * 1.6);
+        $node.width($node.width() * 1.9);
         zoomDone = true;
       }
     }, 1000);
 
     setTimeout(function() {
       if ( zoomDone == false && $node.width() ) {
-        $node.width($node.width() * 1.6);
+        $node.width($node.width() * 1.9);
         zoomDone = true;
       }
     }, 2000);
 
     setTimeout(function() {
       if ( zoomDone == false && $node.width() ) {
-        $node.width($node.width() * 1.6);
+        $node.width($node.width() * 1.9);
         zoomDone = true;
       }
     }, 5000);
