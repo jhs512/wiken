@@ -51,6 +51,11 @@
       showPreview();
     }
 
+    keyboardJS.bind('ctrl + e', function(e) {
+      e.preventDefault();
+      location.href = location.pathname.replace('/edit', '');
+    });
+
     keyboardJS.bind('ctrl + p', togglePreview);
     keyboardJS.bind('ctrl + s', function(e) {
       e.preventDefault();
@@ -138,9 +143,9 @@
                  data-toast-editor-placeholder="note ..">
                 <script type="text/x-template"></script>
             </div>
-            <div class="toast-ui-viewer toast-ui-editor--bodyViewer absolute inset-0 z-10 h-full hidden bg-white p-3"
+            <div class="toast-ui-viewer toast-ui-editor--bodyViewer absolute inset-0 z-10 h-full hidden p-3"
                  data-toast-editor-height="100%;"
-                 data-toast-editor-placeholder="note ..">
+                 data-toast-editor-placeholder="note .." style="background-color:hsla(var(--b1)/var(--tw-bg-opacity,1));">
                 <script type="text/x-template"></script>
             </div>
             <script th:if="${ken != null}" type="text/x-template">
@@ -355,6 +360,10 @@ $$
                   lineNumbers: true,
                   styleActiveLine: true,
                 });
+
+                if ( toastUiThemeName == 'dark' ) {
+                  CodeMirrorEditor__editor.setOption("theme", 'hopscotch');
+                }
 
                 let CodeMirrorEditor__originSource2 = ToastEditor__escape(CodeMirrorEditor__originSource.trim());
 

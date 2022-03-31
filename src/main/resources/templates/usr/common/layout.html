@@ -90,20 +90,23 @@
     <script th:src="${@rq.getResourceUri('/resource/toast_ui_editor_custom.js')}"></script>
 
     <!-- 코드 mirror -->
-    <script src='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.js'></script>
-    <link rel='stylesheet prefetch' href='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/codemirror.min.css'>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js'></script>
+    <link rel='stylesheet prefetch' href='//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css'>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/mode/markdown/markdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/selection/active-line.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/search/search.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/search/searchcursor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/search/jump-to-line.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/dialog/dialog.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/addon/dialog/dialog.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/search.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/searchcursor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/search/jump-to-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/dialog/dialog.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/dialog/dialog.min.css">
 
-    <!-- 단축키 라이브러리 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/keyboardjs/2.3.3/keyboard.min.js"></script>
+    <link th:if="${@rq.themeName == 'mydark'}" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/hopscotch.min.css">
+
   </th:block>
+
+  <!-- 단축키 라이브러리 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/keyboardjs/2.3.3/keyboard.min.js"></script>
 
 
   <!-- 커스텀 CSS -->
@@ -112,6 +115,13 @@
   <script src="/resource/toastr_custom.js"></script>
 
   <link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/dist.css')}">
+
+  <script>
+    keyboardJS.bind('ctrl + alt + e', function(e) {
+      e.preventDefault();
+      location.href = '/ken';
+    });
+  </script>
 
   <script th:inline="javascript" defer>
     const params = /*[[ ${param} ]]*/ null;

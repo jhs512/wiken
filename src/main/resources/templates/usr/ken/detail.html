@@ -6,6 +6,12 @@
 </head>
 
 <main layout:fragment="main">
+    <script>
+        keyboardJS.bind('ctrl + e', function(e) {
+          e.preventDefault();
+          location.href = location.pathname + '/edit';
+        });
+    </script>
     <div class="ppt-popup fixed hidden">
         <div class="btn-popup"></div>
         <div class="toast-ui-viewer h-full toast-ui-viewer--ppt"
