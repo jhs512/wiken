@@ -39,7 +39,7 @@ html.ppt-popup-visible > body {
   left:0;
   width:100%;
   height:100%;
-  background-color:white;
+  background-color:hsla(var(--b1)/var(--tw-bg-opacity,1));
   z-index:100000;
 }
 
