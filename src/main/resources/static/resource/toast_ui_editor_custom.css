@@ -218,4 +218,8 @@ html.ppt-popup-visible > body {
     line-height:1.3;
   }
 }
+
+html > body .toastui-editor-contents ol>li:before {
+  white-space:nowrap;
+}
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */
