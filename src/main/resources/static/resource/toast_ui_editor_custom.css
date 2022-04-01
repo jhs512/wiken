@@ -221,5 +221,6 @@ html.ppt-popup-visible > body {
 
 html > body .toastui-editor-contents ol>li:before {
   white-space:nowrap;
+  font-family: "monospace";
 }
 /* 토스트 UI, 유튜브 플러그인에서 사용하는 CSS 끝 */
