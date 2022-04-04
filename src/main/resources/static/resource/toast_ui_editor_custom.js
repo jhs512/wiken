@@ -89,7 +89,6 @@ $(document).keydown(function(event) {
   if ( pptVisible ) {
     if ( event.keyCode == 33 || event.which == 33 ) {
       pptIndex = pptIndex == 0 ? 0 : pptIndex - 1;
-      console.log(pptIndex);
       event.preventDefault();
       const $node = $('.ppt-popup .toast-ui-viewer');
       //$node.find(' > div').scrollTop($node.find(' > div > div').eq(pptIndex).position().top);
@@ -97,7 +96,6 @@ $(document).keydown(function(event) {
     }
     else if ( event.keyCode == 34 || event.which == 34 ) {
       pptIndex = pptIndex + 1 == pptSlides ? pptIndex : pptIndex + 1;
-      console.log(pptIndex);
       event.preventDefault();
       const $node = $('.ppt-popup .toast-ui-viewer');
       //$node.find(' > div').scrollTop($node.find(' > div > div').eq(pptIndex).position().top);
