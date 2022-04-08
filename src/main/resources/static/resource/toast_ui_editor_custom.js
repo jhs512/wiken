@@ -521,7 +521,15 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
     while ( true ) {
       if ( $next.prop('tagName') == 'H1' ) {
-        const text = $next.text().replace(/\[br \/\]/gi, '<br class="hidden sm:block" />');
+        const text = $next
+          .text()
+          .replace(/\[br \/\]/gi, '<br class="hidden sm:block" />')
+          .replace(
+            /\[span style="(.+?)"](.+?)\[\/span\]/g,
+            function (match, contents1, contents2) {
+              return `<span style="${contents1}">${contents2}</span>`;
+            }
+          );
         const h1Texts = text.split('--o--');
         const optionsMap = {};
         optionsMap['CLASS'] = '';
