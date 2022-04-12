@@ -79,6 +79,7 @@ function hidePpt() {
   const $contents = $node.find('.toastui-editor-contents');
   $contents.empty();
   $('.ppt-popup').addClass('hidden');
+  removeRect();
 }
 
 $(document).keydown(function(event) {
@@ -659,19 +660,26 @@ function DrawRect__init() {
     currentMouseCursorY = event.clientY;
   });
 
-  $window.on("keydown", function () {
-    if ( event.keyCode == 21 ) {
-      startDrawRect();
+  $window.on("keydown", function (event) {
+    if ( event.keyCode == 18 && pptVisible ) {
+      if ( rectangleVisible ) {
+        removeRect();
+      }
+      else {
+        startDrawRect();
+      }
     }
   });
 
-  $window.on("keyup", function () {
-    if ( event.keyCode == 21 ) {
+  $window.on("keyup", function (event) {
+    if ( event.keyCode == 18 && pptVisible ) {
       completeDrawRect();
     }
 
-    if ( event.keyCode == 88 && rectangleVisible ) {
+    if ( event.keyCode == 27 && pptVisible && rectangleVisible ) {
       removeRect();
+      event.preventDefault();
+      return;
     }
   });
 
@@ -689,21 +697,21 @@ function DrawRect__init() {
     const height = currentMouseCursorY - rectangleTop;
 
     $('.rectangle')
-      .css('top', rectangleTop)
-      .css('left', rectangleLeft)
-      .css('width', width)
-      .css('height', height)
+      .css('top', rectangleTop - 3)
+      .css('left', rectangleLeft - 3)
+      .css('width', width + 6)
+      .css('height', height + 6)
       .show();
 
     drawRectStarted = false;
     rectangleVisible = true;
   }
+}
 
-  function removeRect() {
-    drawRectStarted = false;
-    rectangleVisible = false;
-    $('.rectangle').hide();
-  }
+function removeRect() {
+  drawRectStarted = false;
+  rectangleVisible = false;
+  $('.rectangle').hide();
 }
 
 $(function () {

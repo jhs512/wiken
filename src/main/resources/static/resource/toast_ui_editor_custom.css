@@ -227,8 +227,8 @@ html > body .toastui-editor-contents ol>li:before {
 
 .rectangle {
   position:fixed;
-  border:2px solid red;
+  border:3px solid red;
   display:none;
-  z-index:10000;
+  z-index:100001;
   pointer-events:none;
 }
