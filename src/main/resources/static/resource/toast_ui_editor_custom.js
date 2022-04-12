@@ -645,8 +645,70 @@ function tryToGoHashEl() {
   }
 }
 
+function DrawRect__init() {
+  const $window = $(window);
+  let rectangleLeft = 0;
+  let rectangleTop = 0;
+  let currentMouseCursorX = 0;
+  let currentMouseCursorY = 0;
+  let rectangleVisible = false;
+  let drawRectStarted = false;
+
+  $window.on('mousemove', function (event) {
+    currentMouseCursorX = event.clientX;
+    currentMouseCursorY = event.clientY;
+  });
+
+  $window.on("keydown", function () {
+    if ( event.keyCode == 21 ) {
+      startDrawRect();
+    }
+  });
+
+  $window.on("keyup", function () {
+    if ( event.keyCode == 21 ) {
+      completeDrawRect();
+    }
+
+    if ( event.keyCode == 88 && rectangleVisible ) {
+      removeRect();
+    }
+  });
+
+  function startDrawRect() {
+    if ( drawRectStarted ) return;
+
+    drawRectStarted = true;
+
+    rectangleLeft = currentMouseCursorX;
+    rectangleTop = currentMouseCursorY;
+  }
+
+  function completeDrawRect() {
+    const width = currentMouseCursorX - rectangleLeft;
+    const height = currentMouseCursorY - rectangleTop;
+
+    $('.rectangle')
+      .css('top', rectangleTop)
+      .css('left', rectangleLeft)
+      .css('width', width)
+      .css('height', height)
+      .show();
+
+    drawRectStarted = false;
+    rectangleVisible = true;
+  }
+
+  function removeRect() {
+    drawRectStarted = false;
+    rectangleVisible = false;
+    $('.rectangle').hide();
+  }
+}
+
 $(function () {
   ToastEditor__init();
   ToastEditorView__init();
   tryToGoHashEl();
+  DrawRect__init();
 });
