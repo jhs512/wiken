@@ -43,7 +43,7 @@ html.ppt-popup-visible > body {
   z-index:100000;
 }
 
-.ppt-popup::selection {
+.ppt-popup .toastui-editor-contents *::selection {
   background-color: #FFA;
 }
 
