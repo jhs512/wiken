@@ -43,6 +43,10 @@ html.ppt-popup-visible > body {
   z-index:100000;
 }
 
+.ppt-popup::selection {
+  background-color: #FFA;
+}
+
 .toast-ui-viewer--ppt {
   padding:0;
 }

@@ -666,7 +666,7 @@ function DrawRect__init() {
         removeRect();
       }
       else {
-        startDrawRect();
+        //startDrawRect();
       }
     }
   });
