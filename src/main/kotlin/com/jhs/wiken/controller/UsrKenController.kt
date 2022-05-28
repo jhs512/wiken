@@ -132,6 +132,9 @@ class UsrKenController(
         rq.currentPageCanGoEditCurrentKen = true
         val ken = kenService.getKen(id) ?: return rq.historyBackJsOnTemplate("존재하지 않는 캔 입니다.")
         model["ken"] = ken
+
+        rq.currentPageIsDetail = true;
+
         return "usr/ken/detail"
     }
 

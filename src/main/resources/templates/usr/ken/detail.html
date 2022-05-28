@@ -1,37 +1,77 @@
 <!doctype html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{usr/common/layout}">
+			layout:decorate="~{usr/common/layout}">
 <head>
-    <title>Ken [[${ken.id}]]</title>
+	<title>Ken [[${ken.id}]]</title>
 </head>
 
 <main layout:fragment="main">
-    <script>
-        keyboardJS.bind('ctrl + e', function(e) {
-          e.preventDefault();
-          location.href = location.pathname + '/edit';
-        });
-    </script>
-    <div class="ppt-popup fixed hidden">
-        <div class="btn-popup"></div>
-        <div class="toast-ui-viewer h-full toast-ui-viewer--ppt"
-             data-toast-editor-height="100%;"
-             data-toast-editor-placeholder="note ..">
-            <script type="text/x-template"></script>
-        </div>
-    </div>
-    <div class="w-full min-h-full mx-auto px-[18px] py-10">
-        <h1 class="font-bold text-4xl">[[${ken.title}]]</h1>
-        <h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
-        <div class="toast-ui-viewer mt-4">
-            <script type="text/x-template">
-                [(${ken.sourceForPrint})]
-            </script>
-        </div>
-    </div>
-
-    <div id="KenReplyApp" class="hidden"></div>
-    <script th:src="${@rq.getBundleJsResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+    
+    var kenId = [[${ken.id}]];
+    
+    /*]]>*/
+    
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+	
+	<script>
+	  function downdload_pdf() {
+	    const element = document.querySelector('.doc-body');
+	    var worker = html2pdf()
+	      .set({
+					margin: [15, 0, 15, 0], // top, right, bottom, left 마진 여백
+					filename: 'document', // Pdf 파일 명
+					pagebreak: { mode: 'avoid-all' }, // pagebreak 옵션
+					image: { type: 'jpeg', quality: 1 }, // 이미지 퀄리티 (pdf 들어갈 영역을 사진을 찍어 변환 하기 때문에 이미지 퀄리티 = pdf 퀄리티
+					html2canvas: { // html2canvas 옵션
+						useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
+						scrollY: 0, // 스크롤 이슈 때문에 필수
+						scale: 1, // browsers device pixel ratio
+						dpi: 800,
+						letterRendering: true,
+						allowTaint: false, //useCORS를 true로 설정 시 반드시 allowTaint를 false처리 해주어야함
+					},
+					jsPDF: { orientation: 'portrait' },
+				})
+	      .from(element)
+	      .save();
+	  }
+	  
+		keyboardJS.bind('ctrl + e', function(e) {
+			e.preventDefault();
+			location.href = location.pathname + '/edit';
+		});
+	
+	</script>
+	
+	<div th:if="${param.printPrf}" class="flex justify-center pt-[30px]">
+		<button class="btn btn-primary btn-lg" onclick="downdload_pdf();">
+			<span><i class="fa-solid fa-file-pdf"></i></span>
+			<span>PDF 다운로드</span>
+		</button>
+	</div>
+	<div class="ppt-popup fixed hidden">
+		<div class="btn-popup"></div>
+		<div class="toast-ui-viewer h-full toast-ui-viewer--ppt"
+				 data-toast-editor-height="100%;"
+				 data-toast-editor-placeholder="note ..">
+			<script type="text/x-template"></script>
+		</div>
+	</div>
+	<div class="doc-body w-full min-h-full mx-auto px-[18px] py-10">
+		<h1 class="font-bold text-4xl">[[${ken.title}]]</h1>
+		<h1 class="font-bold mt-4">[[${ken.strKeywords}]]</h1>
+		<div class="toast-ui-viewer mt-4">
+			<script type="text/x-template">
+				[(${ken.sourceForPrint})]
+			</script>
+		</div>
+	</div>
+	
+	<div id="KenReplyApp" class="hidden"></div>
+	<script th:src="${@rq.getBundleJsResourceUri('/resource/react/KenReplyApp.bundle.js')}"></script>
 
 </main>
 </html>

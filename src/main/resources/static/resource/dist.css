@@ -1703,6 +1703,16 @@ html{
   min-height: 2rem;
 }
 
+.btn-lg{
+  height: 4rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  line-height: 2;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  min-height: 4rem;
+}
+
 .btn-block{
   width: 100%;
 }
@@ -1719,6 +1729,12 @@ html{
   width: 2rem;
 }
 
+.btn-square.btn-lg{
+  height: 4rem;
+  padding: 0;
+  width: 4rem;
+}
+
 .btn-circle.btn-xs{
   border-radius: 9999px;
   height: 1.5rem;
@@ -1731,6 +1747,13 @@ html{
   height: 2rem;
   padding: 0;
   width: 2rem;
+}
+
+.btn-circle.btn-lg{
+  border-radius: 9999px;
+  height: 4rem;
+  padding: 0;
+  width: 4rem;
 }
 
 .input-xs{
@@ -2044,6 +2067,14 @@ html{
   padding-top: 1rem;
 }
 
+.pt-\[10px\]{
+  padding-top: 10px;
+}
+
+.pt-\[30px\]{
+  padding-top: 30px;
+}
+
 .text-center{
   text-align: center;
 }
@@ -2056,6 +2087,11 @@ html{
 .text-lg{
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-bold{

@@ -1,3 +1,5 @@
+var pdfMode = true;
+
 function getUriParams(uri) {
   uri = uri.trim();
   uri = uri.replaceAll("&amp;", "&");
@@ -32,7 +34,11 @@ function renderPptButton(source) {
     });
   }, 100);
 
-  return `<a id="${aId}" style="cursor:pointer; scroll-margin-top:10px; margin-bottom:10px; display:inline-block;"><span id="${id}">${title}</span></a>`;
+  return [
+    `<a id="${aId}" style="cursor:pointer; scroll-margin-top:10px; margin-bottom:10px; display:inline-block;"><span id="${id}">${title}</span></a>`,
+    title,
+    aId
+  ];
 }
 
 let pptVisible = false;
@@ -120,7 +126,11 @@ $(function() {
 function pptPlugin() {
   const toHTMLRenderers = {
     ppt(node) {
-      const html = renderPptButton(node.literal);
+      let [html, title, aId] = renderPptButton(node.literal);
+
+      if ( pdfMode ) {
+        html = `<a href="http://wiken.io/ken/${kenId}#${aId}" target="_blank">http://wiken.io/ken/${kenId}#${aId}</a>`
+      }
 
       return [
         { type: "openTag", tagName: "div", outerNewLine: true },
@@ -174,6 +184,11 @@ function codepenPlugin() {
       iframeUri = iframeUri.substr(0, pos);
     }
 
+    if ( pdfMode ) {
+      const url = iframeUri.split('?')[0].replace('embed', 'pen');
+      return `<a href="${url}" target="_blank">${url}</a>`;
+    }
+
     return (
       '<iframe height="' +
       height +
@@ -210,6 +225,10 @@ function replPlugin() {
 
     if (uriParams.height) {
       height = uriParams.height;
+    }
+
+    if ( pdfMode ) {
+      return `<a href="${uri}" target="_blank">${uri}</a>`;
     }
 
     return (
@@ -284,6 +303,11 @@ function youtubePlugin() {
     if (youtubeId.indexOf("?") !== -1) {
       let pos = uri.indexOf("?");
       youtubeId = youtubeId.substr(0, pos);
+    }
+
+    if ( pdfMode ) {
+      const url = 'https://youtu.be/' + youtubeId;
+      return `<a href="${url}" target="_blank">${url}</a>`;
     }
 
     return (

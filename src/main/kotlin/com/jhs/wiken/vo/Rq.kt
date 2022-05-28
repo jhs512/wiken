@@ -123,6 +123,9 @@ class Rq(
   // 현재 페이지에서 현재 Ken을 삭제할 수 있는지 여부
   var currentPageCanDeleteCurrentKen = false
 
+  // 현재 페이지에서 현재 Ken을 삭제할 수 있는지 여부
+  var currentPageIsDetail = false
+
   // 완벽
   fun init() {
     // 로그인 되어있다면, 로그인된 사용자 정보를 세션에서 가져온다.
