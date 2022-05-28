@@ -1,4 +1,6 @@
-var pdfMode = true;
+if ( pdfMode === undefined ) {
+  var pdfMode = false;
+}
 
 function getUriParams(uri) {
   uri = uri.trim();

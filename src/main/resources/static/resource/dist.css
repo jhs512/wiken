@@ -2063,16 +2063,12 @@ html{
   padding-top: 0.75rem;
 }
 
-.pt-4{
-  padding-top: 1rem;
-}
-
-.pt-\[10px\]{
-  padding-top: 10px;
-}
-
 .pt-\[30px\]{
   padding-top: 30px;
+}
+
+.pt-4{
+  padding-top: 1rem;
 }
 
 .text-center{
@@ -2087,11 +2083,6 @@ html{
 .text-lg{
   font-size: 1.125rem;
   line-height: 1.75rem;
-}
-
-.text-3xl{
-  font-size: 1.875rem;
-  line-height: 2.25rem;
 }
 
 .font-bold{
