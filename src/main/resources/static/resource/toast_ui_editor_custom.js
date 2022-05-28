@@ -517,6 +517,7 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 
     let zoomDone = false;
 
+    /*
     setTimeout(function() {
       if ( zoomDone == false && $node.width() ) {
         $node.width($node.width() * 1.9);
@@ -537,6 +538,7 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
         zoomDone = true;
       }
     }, 5000);
+    */
   });
 
   $node.find('h1').each(function(index, node) {
@@ -641,10 +643,16 @@ function ToastEditorView__afterSetMarkdown($node) {
     const $node = $(node);
     if ( $node.width() ) {
       $node.width($node.width() * 1.5);
+      setTimeout(function() {
+        $node.height($node.height());
+      }, 100);
     }
     else {
       $node.on('load', function() {
         $node.width($node.width() * 1.5);
+        setTimeout(function() {
+          $node.height($node.height());
+        }, 100);
       });
     }
   });

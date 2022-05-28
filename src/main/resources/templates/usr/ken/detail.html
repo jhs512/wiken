@@ -17,6 +17,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 	
 	<script>
+	  function try_downdload_pdf() {
+	    setTimeout(downdload_pdf, 2000);
+	  }
+	  
 	  function downdload_pdf() {
 	    const element = document.querySelector('.doc-body');
 	    var worker = html2pdf()
@@ -46,7 +50,7 @@
 	</script>
 	
 	<div th:if="${param.printPrf}" class="flex justify-center pt-[30px]">
-		<button class="btn btn-primary btn-lg" onclick="downdload_pdf();">
+		<button class="btn btn-primary btn-lg" onclick="try_downdload_pdf();">
 			<span><i class="fa-solid fa-file-pdf"></i></span>
 			<span>PDF 다운로드</span>
 		</button>
