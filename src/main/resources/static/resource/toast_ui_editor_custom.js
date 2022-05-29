@@ -644,14 +644,18 @@ function ToastEditorView__afterSetMarkdown($node) {
     if ( $node.width() ) {
       $node.width($node.width() * 1.5);
       setTimeout(function() {
-        $node.height($node.height());
+        if ( pdfMode ) {
+          $node.height($node.height());
+        }
       }, 100);
     }
     else {
       $node.on('load', function() {
         $node.width($node.width() * 1.5);
         setTimeout(function() {
-          $node.height($node.height());
+          if ( pdfMode ) {
+            $node.height($node.height());
+          }
         }, 100);
       });
     }
