@@ -93,6 +93,7 @@ function hidePpt() {
 $(document).keydown(function(event) {
   if ( event.keyCode == 27 || event.which == 27 ) {
     hidePpt();
+    zooming.close();
   }
 
   if ( pptVisible ) {
@@ -757,4 +758,10 @@ $(function () {
   ToastEditorView__init();
   tryToGoHashEl();
   DrawRect__init();
+
+  if ( md.mobile() || md.tablet() ) {
+    var zoom = new Zooming({
+      // options...
+    }).listen('.toastui-editor-contents img')
+  }
 });

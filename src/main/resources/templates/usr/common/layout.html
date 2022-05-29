@@ -89,8 +89,16 @@
 		<script th:if="${param.printPrf}">
 		  pdfMode = true;
 	  </script>
-		
-    <link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/toast_ui_editor_custom.css')}">
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.5/mobile-detect.min.js"></script>
+		<script>
+			var md = new MobileDetect(window.navigator.userAgent);
+		</script>
+	
+		<script src="https://unpkg.com/zooming/build/zooming.min.js"></script>
+	
+	
+		<link rel="stylesheet" th:href="${@rq.getResourceUri('/resource/toast_ui_editor_custom.css')}">
     <!-- 토스트 UI 에디터 관련 JS -->
     <script th:src="${@rq.getResourceUri('/resource/toast_ui_editor_custom.js')}"></script>
 

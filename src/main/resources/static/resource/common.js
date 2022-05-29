@@ -5,11 +5,16 @@ const getFormData = object => Object.keys(object).reduce((formData, key) => {
 
 function strToHtmlHash(str)
 {
-  return str
+  str = str
     .trim()
     .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '')
-    .trim()
     .replace(/ /gi, "-");
+
+  if ( str.substr(1, 1) == '-' ) {
+    str = str.substr(2);
+  }
+
+  return str;
 }
 
 let needToGoHashLater = false;
