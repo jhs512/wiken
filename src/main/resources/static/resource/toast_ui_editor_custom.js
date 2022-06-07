@@ -93,7 +93,6 @@ function hidePpt() {
 $(document).keydown(function(event) {
   if ( event.keyCode == 27 || event.which == 27 ) {
     hidePpt();
-    zooming.close();
   }
 
   if ( pptVisible ) {
@@ -129,7 +128,21 @@ $(function() {
 function pptPlugin() {
   const toHTMLRenderers = {
     ppt(node) {
-      let [html, title, aId] = renderPptButton(node.literal);
+      let literal = node.literal;
+      if ( literal.indexOf('useAbove01') != -1 ) {
+        literal = literal.replace('useAbove01', '');
+
+        let currentNode = node.prev.firstChild;
+
+        while ( currentNode ) {
+          literal += '# ' + currentNode.firstChild.firstChild.literal + '--o--t=1\n';
+          currentNode = currentNode.next;
+        }
+      }
+
+      console.log(literal);
+
+      let [html, title, aId] = renderPptButton(literal);
 
       if ( pdfMode ) {
         html = `<a href="http://wiken.io/ken/${kenId}#${aId}" target="_blank">http://wiken.io/ken/${kenId}#${aId}</a>`
@@ -712,7 +725,7 @@ function DrawRect__init() {
 
   $window.on("keyup", function (event) {
     if ( event.keyCode == 18 && pptVisible ) {
-      completeDrawRect();
+      //completeDrawRect();
     }
 
     if ( event.keyCode == 27 && pptVisible && rectangleVisible ) {
@@ -757,11 +770,9 @@ $(function () {
   ToastEditor__init();
   ToastEditorView__init();
   tryToGoHashEl();
-  DrawRect__init();
+  //DrawRect__init();
 
   if ( md.mobile() || md.tablet() ) {
-    var zoom = new Zooming({
-      // options...
-    }).listen('.toastui-editor-contents img')
+
   }
 });
