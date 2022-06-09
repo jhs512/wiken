@@ -140,8 +140,6 @@ function pptPlugin() {
         }
       }
 
-      console.log(literal);
-
       let [html, title, aId] = renderPptButton(literal);
 
       if ( pdfMode ) {
@@ -642,7 +640,7 @@ function ToastEditorView__afterSetMarkdownForPpt($node) {
 }
 
 function ToastEditorView__afterSetMarkdown($node) {
-  $node.find("a").attr("target", "_blank");
+  $node.find(`a:not([href^="#"])`).attr("target", "_blank");
 
   $node.find("h1,h2,h3").each(function (index, node) {
     const $node = $(node);
